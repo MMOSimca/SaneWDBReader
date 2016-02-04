@@ -14,10 +14,10 @@ namespace WDBReader
         public int SuggestedGroupNum { get; set; }
         public int RewardNextQuest { get; set; }
         public int RewardXPDifficulty { get; set; }
-        public int UNK_1 { get; set; } // UNKNOWN
+        public int RewardXPFlags { get; set; } // ?
         public int RewardMoney { get; set; }
         public int RewardMoneyDifficulty { get; set; }
-        public int UNK_2 { get; set; } // UNKNOWN
+        public int RewardMoneyFlags { get; set; } // ?
         public int RewardBonusMoney { get; set; }
         public int RewardDisplaySpell { get; set; }
         public int RewardSpell { get; set; }
@@ -127,10 +127,10 @@ namespace WDBReader
             SuggestedGroupNum = ds.GetInt();
             RewardNextQuest = ds.GetInt();
             RewardXPDifficulty = ds.GetInt();
-            UNK_1 = ds.GetInt(); // UNKNOWN
+            RewardXPFlags = ds.GetInt(); // ?
             RewardMoney = ds.GetInt();
             RewardMoneyDifficulty = ds.GetInt();
-            UNK_2 = ds.GetInt(); // UNKNOWN
+            RewardMoneyFlags = ds.GetInt(); // ?
             RewardBonusMoney = ds.GetInt();
             RewardDisplaySpell = ds.GetInt();
             RewardSpell = ds.GetInt();

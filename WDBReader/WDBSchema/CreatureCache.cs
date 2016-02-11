@@ -22,6 +22,8 @@ namespace WDBReader
         public int[] CreatureDisplayID { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }
+        public int TrackingQuestID { get; set; }
+        public int UNK_LEGION_1 { get; set; }
 
         public CreatureCache(DataStore ds)
         {
@@ -71,6 +73,9 @@ namespace WDBReader
             var numQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
+            TrackingQuestID = ds.GetInt();
+            UNK_LEGION_1 = ds.GetInt();
+
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);
             CursorName = ds.GetString(cursorNameLength);

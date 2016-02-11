@@ -63,6 +63,8 @@ namespace WDBReader
         public int[] RewardCurrencyID { get; set; } // size 4
         public int[] RewardCurrencyQuantity { get; set; } // size 4
 
+        public int UNK_LEGION_1 { get; set; }
+        public int UNK_LEGION_2 { get; set; }
         public int AcceptedSoundKitID { get; set; }
         public int CompleteSoundKitID { get; set; }
         public int AreaGroupID { get; set; }
@@ -83,9 +85,10 @@ namespace WDBReader
         0000 0400: Draenei
         0020 0000: Worgen
         0080 0000: ??? (Only entry is an unused test quest)
-        0100 0000: Alliance Pandaren
-        0200 0000: Horde Pandaren
+        0100 0000: Horde Pandaren
+        0200 0000: Alliance Pandaren
         */
+        public uint UNK_LEGION_3 { get; set; }
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
@@ -228,12 +231,15 @@ namespace WDBReader
             RewardCurrencyID[3] = ds.GetInt();
             RewardCurrencyQuantity[3] = ds.GetInt();
 
+            UNK_LEGION_1 = ds.GetInt();
+            UNK_LEGION_2 = ds.GetInt();
             AcceptedSoundKitID = ds.GetInt();
             CompleteSoundKitID = ds.GetInt();
             AreaGroupID = ds.GetInt();
             TimeAllowed = ds.GetInt();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt();
+            UNK_LEGION_3 = ds.GetUInt();
 
             // Populate quest objectives
             Objectives = new List<QuestObjective>();

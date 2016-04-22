@@ -14,18 +14,23 @@ namespace WDBReader
         public int SuggestedGroupNum { get; set; }
         public int RewardNextQuest { get; set; }
         public int RewardXPDifficulty { get; set; }
-        public int RewardXPFlags { get; set; } // ?
+        public float RewardXP_UNK_FLOAT { get; set; } // ?
         public int RewardMoney { get; set; }
         public int RewardMoneyDifficulty { get; set; }
-        public int RewardMoneyFlags { get; set; } // ?
+        public float RewardMoney_UNK_FLOAT { get; set; } // ?
         public int RewardBonusMoney { get; set; }
         public int RewardDisplaySpell { get; set; }
         public int RewardSpell { get; set; }
         public int RewardHonor { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
         public float RewardKillHonor { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
+        public int UNK_21531_1 { get; set; }
+        public int UNK_21531_2 { get; set; }
+        public int UNK_LEGION_1 { get; set; }
+        public float UNK_LEGION_2 { get; set; }
+        public int UNK_LEGION_3 { get; set; }
         public int ProvidedItem { get; set; }
         public uint Flags { get; set; }
-        public uint FlagsEx { get; set; }
+        public uint Flags2 { get; set; }
 
         // The player gets all of these rewards
         public int[] RewardFixedItemID { get; set; } // size 4
@@ -62,9 +67,7 @@ namespace WDBReader
         // The player gets all of the following currency rewards
         public int[] RewardCurrencyID { get; set; } // size 4
         public int[] RewardCurrencyQuantity { get; set; } // size 4
-
-        public int UNK_LEGION_1 { get; set; }
-        public int UNK_LEGION_2 { get; set; }
+        
         public int AcceptedSoundKitID { get; set; }
         public int CompleteSoundKitID { get; set; }
         public int AreaGroupID { get; set; }
@@ -88,7 +91,7 @@ namespace WDBReader
         0100 0000: Horde Pandaren
         0200 0000: Alliance Pandaren
         */
-        public uint UNK_LEGION_3 { get; set; }
+        public uint RaceFlags2 { get; set; }
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
@@ -130,18 +133,23 @@ namespace WDBReader
             SuggestedGroupNum = ds.GetInt();
             RewardNextQuest = ds.GetInt();
             RewardXPDifficulty = ds.GetInt();
-            RewardXPFlags = ds.GetInt(); // ?
+            RewardXP_UNK_FLOAT = ds.GetFloat(); // ?
             RewardMoney = ds.GetInt();
             RewardMoneyDifficulty = ds.GetInt();
-            RewardMoneyFlags = ds.GetInt(); // ?
+            RewardMoney_UNK_FLOAT = ds.GetFloat(); // ?
             RewardBonusMoney = ds.GetInt();
             RewardDisplaySpell = ds.GetInt();
             RewardSpell = ds.GetInt();
             RewardHonor = ds.GetInt();
             RewardKillHonor = ds.GetFloat();
+            UNK_21531_1 = ds.GetInt();
+            UNK_21531_2 = ds.GetInt();
+            UNK_LEGION_1 = ds.GetInt();
+            UNK_LEGION_2 = ds.GetFloat();
+            UNK_LEGION_3 = ds.GetInt();
             ProvidedItem = ds.GetInt();
             Flags = ds.GetUInt();
-            FlagsEx = ds.GetUInt();
+            Flags2 = ds.GetUInt();
 
             RewardFixedItemID = new int[4];
             RewardFixedItemQuantity = new int[4];
@@ -192,7 +200,8 @@ namespace WDBReader
             POIy = ds.GetFloat();
             POIPriority = ds.GetInt();
             RewardTitle = ds.GetInt();
-            RewardTalents = ds.GetInt();
+            //RewardTalents = ds.GetInt();
+            RewardTalents = -1;
             RewardArenaPoints = ds.GetInt();
             RewardSkillLineID = ds.GetInt();
             RewardNumSkillUps = ds.GetInt();
@@ -230,16 +239,14 @@ namespace WDBReader
             RewardCurrencyQuantity[2] = ds.GetInt();
             RewardCurrencyID[3] = ds.GetInt();
             RewardCurrencyQuantity[3] = ds.GetInt();
-
-            UNK_LEGION_1 = ds.GetInt();
-            UNK_LEGION_2 = ds.GetInt();
+            
             AcceptedSoundKitID = ds.GetInt();
             CompleteSoundKitID = ds.GetInt();
             AreaGroupID = ds.GetInt();
             TimeAllowed = ds.GetInt();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt();
-            UNK_LEGION_3 = ds.GetUInt();
+            RaceFlags2 = ds.GetUInt();
 
             // Populate quest objectives
             Objectives = new List<QuestObjective>();

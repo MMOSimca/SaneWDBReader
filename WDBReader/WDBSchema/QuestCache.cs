@@ -140,10 +140,10 @@ namespace WDBReader
             RewardBonusMoney = ds.GetInt();
             RewardDisplaySpell = ds.GetInt();
             RewardSpell = ds.GetInt();
-            RewardHonor = ds.GetInt();
-            RewardKillHonor = ds.GetFloat();
             UNK_21531_1 = ds.GetInt();
             UNK_21531_2 = ds.GetInt();
+            RewardHonor = ds.GetInt();
+            RewardKillHonor = ds.GetFloat();
             UNK_LEGION_1 = ds.GetInt();
             UNK_LEGION_2 = ds.GetFloat();
             UNK_LEGION_3 = ds.GetInt();
@@ -248,6 +248,18 @@ namespace WDBReader
             RaceFlags = ds.GetUInt();
             RaceFlags2 = ds.GetUInt();
 
+            // String sizes
+            var titleLength = ds.GetIntByBits(9);
+            var summaryLength = ds.GetIntByBits(12);
+            var textLength = ds.GetIntByBits(12);
+            var trackerTextLength = ds.GetIntByBits(9);
+            var portraitGiverTextLength = ds.GetIntByBits(10);
+            var portraitGiverNameLength = ds.GetIntByBits(8);
+            var portraitTurnInTextLength = ds.GetIntByBits(10);
+            var portraitTurnInNameLength = ds.GetIntByBits(8);
+            var completionBlurbLength = ds.GetIntByBits(11);
+            ds.Flush(); // Reset bit position and advance stream position to next byte
+
             // Populate quest objectives
             Objectives = new List<QuestObjective>();
             for (var i = 0; i < NumObjectives; ++i)
@@ -271,18 +283,6 @@ namespace WDBReader
                 obj.Description = ds.GetString(DescriptionLength);
                 Objectives.Add(obj);
             }
-
-            // String sizes
-            var titleLength = ds.GetIntByBits(9);
-            var summaryLength = ds.GetIntByBits(12);
-            var textLength = ds.GetIntByBits(12);
-            var trackerTextLength = ds.GetIntByBits(9);
-            var portraitGiverTextLength = ds.GetIntByBits(10);
-            var portraitGiverNameLength = ds.GetIntByBits(8);
-            var portraitTurnInTextLength = ds.GetIntByBits(10);
-            var portraitTurnInNameLength = ds.GetIntByBits(8);
-            var completionBlurbLength = ds.GetIntByBits(11);
-            ds.Flush(); // Reset bit position and advance stream position to next byte
 
             // Strings
             Title = ds.GetString(titleLength);

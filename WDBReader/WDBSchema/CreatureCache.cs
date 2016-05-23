@@ -16,8 +16,7 @@ namespace WDBReader
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }
-        public int Flags0 { get; set; }
-        public int Flags1 { get; set; }
+        public uint[] Flags { get; set; }
         public int[] ProxyCreatureID { get; set; }
         public int[] CreatureDisplayID { get; set; }
         public string[] Name { get; set; }
@@ -51,8 +50,11 @@ namespace WDBReader
             NameAlt[2] = ds.GetString(nameAlt2Length);
             Name[3] = ds.GetString(name3Length);
             NameAlt[3] = ds.GetString(nameAlt3Length);
-            Flags0 = ds.GetInt();
-            Flags1 = ds.GetInt();
+            Flags = new uint[2]
+            {
+                ds.GetUInt(),
+                ds.GetUInt(),
+            };
             CreatureType = ds.GetInt();
             CreatureFamily = ds.GetInt();
             Classification = ds.GetInt();
@@ -78,7 +80,10 @@ namespace WDBReader
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);
-            CursorName = ds.GetString(cursorNameLength);
+            if (cursorNameLength != 1)
+                CursorName = ds.GetString(cursorNameLength);
+            else
+                CursorName = "";
 
             QuestItems = new List<int>();
             for (var i = 0; i < numQuestItems; i++)

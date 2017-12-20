@@ -61,6 +61,7 @@ namespace WDBReader
         public int[] RewardFactionID { get; set; } // size 5
         public int[] RewardFactionValue { get; set; } // size 5
         public int[] RewardFactionOverride { get; set; } // size 5
+        public int[] RewardFactionUNK { get; set; } // size 5; new in Legion build 22053
 
         public uint RewardFactionFlags { get; set; }
 
@@ -211,21 +212,27 @@ namespace WDBReader
             RewardFactionID = new int[5];
             RewardFactionValue = new int[5];
             RewardFactionOverride = new int[5];
+            RewardFactionUNK = new int[5];
             RewardFactionID[0] = ds.GetInt();
             RewardFactionValue[0] = ds.GetInt();
             RewardFactionOverride[0] = ds.GetInt();
+            RewardFactionUNK[0] = ds.GetInt();
             RewardFactionID[1] = ds.GetInt();
             RewardFactionValue[1] = ds.GetInt();
             RewardFactionOverride[1] = ds.GetInt();
+            RewardFactionUNK[1] = ds.GetInt();
             RewardFactionID[2] = ds.GetInt();
             RewardFactionValue[2] = ds.GetInt();
             RewardFactionOverride[2] = ds.GetInt();
+            RewardFactionUNK[2] = ds.GetInt();
             RewardFactionID[3] = ds.GetInt();
             RewardFactionValue[3] = ds.GetInt();
             RewardFactionOverride[3] = ds.GetInt();
+            RewardFactionUNK[3] = ds.GetInt();
             RewardFactionID[4] = ds.GetInt();
             RewardFactionValue[4] = ds.GetInt();
             RewardFactionOverride[4] = ds.GetInt();
+            RewardFactionUNK[4] = ds.GetInt();
 
             RewardFactionFlags = ds.GetUInt();
 
@@ -239,7 +246,7 @@ namespace WDBReader
             RewardCurrencyQuantity[2] = ds.GetInt();
             RewardCurrencyID[3] = ds.GetInt();
             RewardCurrencyQuantity[3] = ds.GetInt();
-            
+
             AcceptedSoundKitID = ds.GetInt();
             CompleteSoundKitID = ds.GetInt();
             AreaGroupID = ds.GetInt();

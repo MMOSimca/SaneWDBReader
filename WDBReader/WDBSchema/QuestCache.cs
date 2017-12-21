@@ -14,20 +14,18 @@ namespace WDBReader
         public int SuggestedGroupNum { get; set; }
         public int RewardNextQuest { get; set; }
         public int RewardXPDifficulty { get; set; }
-        public float RewardXP_UNK_FLOAT { get; set; } // ?
+        public float RewardXPMultiplier { get; set; } // ?
         public int RewardMoney { get; set; }
         public int RewardMoneyDifficulty { get; set; }
-        public float RewardMoney_UNK_FLOAT { get; set; } // ?
+        public float RewardMoneyMultiplier { get; set; } // ?
         public int RewardBonusMoney { get; set; }
-        public int RewardDisplaySpell { get; set; }
+        public int[] RewardDisplaySpell { get; set; }
         public int RewardSpell { get; set; }
-        public int RewardHonor { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
-        public float RewardKillHonor { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
-        public int UNK_21531_1 { get; set; }
-        public int UNK_21531_2 { get; set; }
-        public int UNK_LEGION_1 { get; set; }
-        public float UNK_LEGION_2 { get; set; }
-        public int UNK_LEGION_3 { get; set; }
+        public int RewardHonorAddition { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
+        public float RewardHonorMultiplier { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
+        public int RewardArtifactXPDifficulty { get; set; }
+        public float RewardArtifactXPMultiplier { get; set; }
+        public int RewardArtifactCategoryID { get; set; }
         public int ProvidedItem { get; set; }
         public uint Flags { get; set; }
         public uint Flags2 { get; set; }
@@ -68,7 +66,7 @@ namespace WDBReader
         // The player gets all of the following currency rewards
         public int[] RewardCurrencyID { get; set; } // size 4
         public int[] RewardCurrencyQuantity { get; set; } // size 4
-        
+
         public int AcceptedSoundKitID { get; set; }
         public int CompleteSoundKitID { get; set; }
         public int AreaGroupID { get; set; }
@@ -134,20 +132,21 @@ namespace WDBReader
             SuggestedGroupNum = ds.GetInt();
             RewardNextQuest = ds.GetInt();
             RewardXPDifficulty = ds.GetInt();
-            RewardXP_UNK_FLOAT = ds.GetFloat(); // ?
+            RewardXPMultiplier = ds.GetFloat();
             RewardMoney = ds.GetInt();
             RewardMoneyDifficulty = ds.GetInt();
-            RewardMoney_UNK_FLOAT = ds.GetFloat(); // ?
+            RewardMoneyMultiplier = ds.GetFloat();
             RewardBonusMoney = ds.GetInt();
-            RewardDisplaySpell = ds.GetInt();
+            RewardDisplaySpell = new int[3];
+            RewardDisplaySpell[0] = ds.GetInt();
+            RewardDisplaySpell[1] = ds.GetInt();
+            RewardDisplaySpell[2] = ds.GetInt();
             RewardSpell = ds.GetInt();
-            UNK_21531_1 = ds.GetInt();
-            UNK_21531_2 = ds.GetInt();
-            RewardHonor = ds.GetInt();
-            RewardKillHonor = ds.GetFloat();
-            UNK_LEGION_1 = ds.GetInt();
-            UNK_LEGION_2 = ds.GetFloat();
-            UNK_LEGION_3 = ds.GetInt();
+            RewardHonorAddition = ds.GetInt();
+            RewardHonorMultiplier = ds.GetFloat();
+            RewardArtifactXPDifficulty = ds.GetInt();
+            RewardArtifactXPMultiplier = ds.GetFloat();
+            RewardArtifactCategoryID = ds.GetInt();
             ProvidedItem = ds.GetInt();
             Flags = ds.GetUInt();
             Flags2 = ds.GetUInt();

@@ -58,11 +58,25 @@ namespace WDBReader
             return BitConverter.ToInt32(buf, 0);
         }
 
+        public long GetInt64()
+        {
+            Flush();
+            var buf = r.ReadBytes(8);
+            return BitConverter.ToInt64(buf, 0);
+        }
+
         public uint GetUInt()
         {
             Flush();
             var buf = r.ReadBytes(4);
             return BitConverter.ToUInt32(buf, 0);
+        }
+
+        public ulong GetUInt64()
+        {
+            Flush();
+            var buf = r.ReadBytes(8);
+            return BitConverter.ToUInt64(buf, 0);
         }
 
         public bool GetBool()

@@ -7,6 +7,7 @@ namespace WDBReader
         public int QuestID { get; set; }
         public int QuestType { get; set; }
         public int QuestLevel { get; set; }
+        public int QuestUNK_25600 { get; set; }
         public int QuestPackageID { get; set; }
         public int QuestMinLevel { get; set; }
         public int QuestSortID { get; set; }
@@ -72,7 +73,7 @@ namespace WDBReader
         public int AreaGroupID { get; set; }
         public int TimeAllowed { get; set; }
         public int NumObjectives { get; set; }
-        public uint RaceFlags { get; set; }
+        public ulong RaceFlags { get; set; }
         /*
         0000 0001: Human
         0000 0002: Orc
@@ -90,7 +91,8 @@ namespace WDBReader
         0100 0000: Horde Pandaren
         0200 0000: Alliance Pandaren
         */
-        public uint RaceFlags2 { get; set; }
+        public uint QuestRewardID { get; set; }
+        public int ExpansionID { get; set; }
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
@@ -110,9 +112,10 @@ namespace WDBReader
             public int ID { get; set; }
             public byte Type { get; set; }
             public sbyte StorageIndex { get; set; }
-            public int ObjectID { get; set; }
+            public int AssetID { get; set; }
             public int Amount { get; set; }
-            public int Flags { get; set; }
+            public uint Flags { get; set; }
+            public uint Flags2 { get; set; }
             public float PercentAmount { get; set; }
             public int NumVisualEffects { get; set; } // Technically, it's fine to not store this
             public List<int> VisualEffects { get; set; } // size NumVisualEffects
@@ -125,6 +128,7 @@ namespace WDBReader
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
             QuestLevel = ds.GetInt();
+            QuestUNK_25600 = ds.GetInt();
             QuestPackageID = ds.GetInt();
             QuestMinLevel = ds.GetInt();
             QuestSortID = ds.GetInt();
@@ -251,8 +255,9 @@ namespace WDBReader
             AreaGroupID = ds.GetInt();
             TimeAllowed = ds.GetInt();
             NumObjectives = ds.GetInt();
-            RaceFlags = ds.GetUInt();
-            RaceFlags2 = ds.GetUInt();
+            RaceFlags = ds.GetUInt64();
+            QuestRewardID = ds.GetUInt();
+            ExpansionID = ds.GetInt();
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);
@@ -274,9 +279,10 @@ namespace WDBReader
                 obj.ID = ds.GetInt();
                 obj.Type = ds.GetByte();
                 obj.StorageIndex = (sbyte)ds.GetByte();
-                obj.ObjectID = ds.GetInt();
+                obj.AssetID = ds.GetInt();
                 obj.Amount = ds.GetInt();
-                obj.Flags = ds.GetInt();
+                obj.Flags = ds.GetUInt();
+                obj.Flags2 = ds.GetUInt();
                 obj.PercentAmount = ds.GetFloat();
 
                 // You may not want to use this visual effects data, since lists aren't very SQL-compatible and we use this information for literally nothing at the moment.

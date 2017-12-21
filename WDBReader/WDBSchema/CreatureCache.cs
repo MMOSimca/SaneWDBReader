@@ -15,14 +15,14 @@ namespace WDBReader
         public bool Leader { get; set; }
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
+        public int UNK_ExpansionID { get; set; }
         public int RequiredExpansion { get; set; }
+        public int VignetteID { get; set; }
         public uint[] Flags { get; set; }
         public int[] ProxyCreatureID { get; set; }
         public int[] CreatureDisplayID { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }
-        public int TrackingQuestID { get; set; }
-        public int UNK_LEGION_1 { get; set; }
 
         public CreatureCache(DataStore ds)
         {
@@ -74,9 +74,9 @@ namespace WDBReader
             EnergyMulti = ds.GetFloat();
             var numQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
+            UNK_ExpansionID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
-            TrackingQuestID = ds.GetInt();
-            UNK_LEGION_1 = ds.GetInt();
+            VignetteID = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

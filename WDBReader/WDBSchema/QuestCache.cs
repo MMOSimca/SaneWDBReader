@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace WDBReader
 {
@@ -7,7 +8,7 @@ namespace WDBReader
         public int QuestID { get; set; }
         public int QuestType { get; set; }
         public int QuestLevel { get; set; }
-        public int QuestUNK_25600 { get; set; }
+        public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
         public int QuestMinLevel { get; set; }
         public int QuestSortID { get; set; }
@@ -54,6 +55,7 @@ namespace WDBReader
         public int RewardSkillLineID { get; set; }
         public int RewardNumSkillUps { get; set; }
         public int PortraitGiverDisplayID { get; set; }
+        public int BFA_UnkDisplayID { get; set; }
         public int PortraitTurnInDisplayID { get; set; }
 
         // The specified FactionID gains X rep (where X is either the override amount or the 'value' multiplied by some unknown factor)
@@ -107,7 +109,7 @@ namespace WDBReader
         public string CompletionBlurb { get; set; }
 
         // We store Quest Objective information in a custom structure due to the varying number of entries and large size
-        public class QuestObjective
+        public struct QuestObjective
         {
             public int ID { get; set; }
             public byte Type { get; set; }
@@ -128,7 +130,7 @@ namespace WDBReader
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
             QuestLevel = ds.GetInt();
-            QuestUNK_25600 = ds.GetInt();
+            QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
             QuestMinLevel = ds.GetInt();
             QuestSortID = ds.GetInt();
@@ -210,6 +212,7 @@ namespace WDBReader
             RewardSkillLineID = ds.GetInt();
             RewardNumSkillUps = ds.GetInt();
             PortraitGiverDisplayID = ds.GetInt();
+            BFA_UnkDisplayID = ds.GetInt();
             PortraitTurnInDisplayID = ds.GetInt();
 
             RewardFactionID = new int[5];

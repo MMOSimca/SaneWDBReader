@@ -10,19 +10,29 @@ namespace WDBReader
         public int CreatureType { get; private set; }
         public int CreatureFamily { get; private set; }
         public int Classification { get; private set; }
+        public float BFA_Float1 { get; set; }
         public float HPMulti { get; private set; }
         public float EnergyMulti { get; private set; }
         public bool Leader { get; set; }
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
-        public int UNK_ExpansionID { get; set; }
         public int RequiredExpansion { get; set; }
         public int VignetteID { get; set; }
+        public int LEGION_Int1 { get; set; }
+        public int ContentTuningID { get; set; }
+        public int BFA_Int1 { get; set; }
         public uint[] Flags { get; set; }
         public int[] ProxyCreatureID { get; set; }
-        public int[] CreatureDisplayID { get; set; }
+        public List<CreatureDisplay> CreatureDisplays { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }
+
+        public struct CreatureDisplay
+        {
+            public int CreatureDisplayInfoID { get; set; }
+            public float Scale { get; set; }
+            public float Probability { get; set; }
+        }
 
         public CreatureCache(DataStore ds)
         {
@@ -63,20 +73,28 @@ namespace WDBReader
                 ds.GetInt(),
                 ds.GetInt(),
             };
-            CreatureDisplayID = new int[4]
+
+            var numCreatureDisplays = ds.GetInt();
+            BFA_Float1 = ds.GetFloat();
+            CreatureDisplays = new List<CreatureDisplay>();
+            for (var i = 0; i < numCreatureDisplays; ++i)
             {
-                ds.GetInt(),
-                ds.GetInt(),
-                ds.GetInt(),
-                ds.GetInt(),
-            };
+                CreatureDisplay cd = new CreatureDisplay();
+                cd.CreatureDisplayInfoID = ds.GetInt();
+                cd.Scale = ds.GetFloat();
+                cd.Probability = ds.GetFloat();
+                CreatureDisplays.Add(cd);
+            }
+
             HPMulti = ds.GetFloat();
             EnergyMulti = ds.GetFloat();
             var numQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
-            UNK_ExpansionID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
             VignetteID = ds.GetInt();
+            LEGION_Int1 = ds.GetInt();
+            ContentTuningID = ds.GetInt();
+            BFA_Int1 = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

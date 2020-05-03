@@ -17,10 +17,11 @@ namespace WDBReader
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }
+        public int TrackingQuestID { get; set; }
         public int VignetteID { get; set; }
-        public int LEGION_Int1 { get; set; }
-        public int ContentTuningID { get; set; }
         public int BFA_Int1 { get; set; }
+        public int B28938_Int1 { get; set; }
+        public int B28938_Int2 { get; set; }
         public uint[] Flags { get; set; }
         public int[] ProxyCreatureID { get; set; }
         public List<CreatureDisplay> CreatureDisplays { get; set; }
@@ -91,10 +92,11 @@ namespace WDBReader
             var numQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
+            TrackingQuestID = ds.GetInt();
             VignetteID = ds.GetInt();
-            LEGION_Int1 = ds.GetInt();
-            ContentTuningID = ds.GetInt();
             BFA_Int1 = ds.GetInt();
+            B28938_Int1 = ds.GetInt();
+            B28938_Int2 = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

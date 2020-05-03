@@ -8,6 +8,7 @@ namespace WDBReader
         public int QuestID { get; set; }
         public int QuestType { get; set; }
         public int QuestLevel { get; set; }
+        public int QuestUNK27075 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
         public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
         public int QuestMinLevel { get; set; }
@@ -16,10 +17,10 @@ namespace WDBReader
         public int SuggestedGroupNum { get; set; }
         public int RewardNextQuest { get; set; }
         public int RewardXPDifficulty { get; set; }
-        public float RewardXPMultiplier { get; set; } // ?
+        public float RewardXPMultiplier { get; set; }
         public int RewardMoney { get; set; }
         public int RewardMoneyDifficulty { get; set; }
-        public float RewardMoneyMultiplier { get; set; } // ?
+        public float RewardMoneyMultiplier { get; set; }
         public int RewardBonusMoney { get; set; }
         public int[] RewardDisplaySpell { get; set; }
         public int RewardSpell { get; set; }
@@ -31,6 +32,7 @@ namespace WDBReader
         public int ProvidedItem { get; set; }
         public uint Flags { get; set; }
         public uint Flags2 { get; set; }
+        public uint Flags3 { get; set; }
 
         // The player gets all of these rewards
         public int[] RewardFixedItemID { get; set; } // size 4
@@ -60,9 +62,9 @@ namespace WDBReader
 
         // The specified FactionID gains X rep (where X is either the override amount or the 'value' multiplied by some unknown factor)
         public int[] RewardFactionID { get; set; } // size 5
-        public int[] RewardFactionValue { get; set; } // size 5
-        public int[] RewardFactionOverride { get; set; } // size 5
-        public int[] RewardFactionUNK { get; set; } // size 5; new in Legion build 22053
+        public int[] RewardFactionValue { get; set; } // size 5; values used here are small integers that are keys into the columns of QuestFactionReward.db2
+        public int[] RewardFactionOverride { get; set; } // size 5; if a value is provided here, it overrides the value provided in the 'Value' field and is used as-is
+        public int[] RewardFactionGainMaxRank { get; set; } // size 5; new in Legion build 22053; states the max reputation rank where you can gain reputation from this quest
 
         public uint RewardFactionFlags { get; set; }
 
@@ -95,6 +97,8 @@ namespace WDBReader
         */
         public uint QuestRewardID { get; set; }
         public int ExpansionID { get; set; }
+        public int ManagedWorldStateID { get; set; }
+        public int UnkInt31984 { get; set; }
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
@@ -130,6 +134,7 @@ namespace WDBReader
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
             QuestLevel = ds.GetInt();
+            QuestUNK27075 = ds.GetInt();
             QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
             QuestMinLevel = ds.GetInt();
@@ -156,6 +161,7 @@ namespace WDBReader
             ProvidedItem = ds.GetInt();
             Flags = ds.GetUInt();
             Flags2 = ds.GetUInt();
+            Flags3 = ds.GetUInt();
 
             RewardFixedItemID = new int[4];
             RewardFixedItemQuantity = new int[4];
@@ -218,27 +224,27 @@ namespace WDBReader
             RewardFactionID = new int[5];
             RewardFactionValue = new int[5];
             RewardFactionOverride = new int[5];
-            RewardFactionUNK = new int[5];
+            RewardFactionGainMaxRank = new int[5];
             RewardFactionID[0] = ds.GetInt();
             RewardFactionValue[0] = ds.GetInt();
             RewardFactionOverride[0] = ds.GetInt();
-            RewardFactionUNK[0] = ds.GetInt();
+            RewardFactionGainMaxRank[0] = ds.GetInt();
             RewardFactionID[1] = ds.GetInt();
             RewardFactionValue[1] = ds.GetInt();
             RewardFactionOverride[1] = ds.GetInt();
-            RewardFactionUNK[1] = ds.GetInt();
+            RewardFactionGainMaxRank[1] = ds.GetInt();
             RewardFactionID[2] = ds.GetInt();
             RewardFactionValue[2] = ds.GetInt();
             RewardFactionOverride[2] = ds.GetInt();
-            RewardFactionUNK[2] = ds.GetInt();
+            RewardFactionGainMaxRank[2] = ds.GetInt();
             RewardFactionID[3] = ds.GetInt();
             RewardFactionValue[3] = ds.GetInt();
             RewardFactionOverride[3] = ds.GetInt();
-            RewardFactionUNK[3] = ds.GetInt();
+            RewardFactionGainMaxRank[3] = ds.GetInt();
             RewardFactionID[4] = ds.GetInt();
             RewardFactionValue[4] = ds.GetInt();
             RewardFactionOverride[4] = ds.GetInt();
-            RewardFactionUNK[4] = ds.GetInt();
+            RewardFactionGainMaxRank[4] = ds.GetInt();
 
             RewardFactionFlags = ds.GetUInt();
 
@@ -261,6 +267,8 @@ namespace WDBReader
             RaceFlags = ds.GetUInt64();
             QuestRewardID = ds.GetUInt();
             ExpansionID = ds.GetInt();
+            ManagedWorldStateID = ds.GetInt();
+            UnkInt31984 = ds.GetInt();
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);

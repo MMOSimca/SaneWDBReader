@@ -17,13 +17,19 @@ namespace WDBReader
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }
+        // Now only used if VignetteID is 0, since if VignetteID is present, they can just lookup Vignette::TrackingQuestID
         public int TrackingQuestID { get; set; }
         public int VignetteID { get; set; }
+        // Some type of 'creature class type' expressed as a bitfield (2^ID); 1 = Warrior, 2 = Rogue, 8 = Caster or something like that
         public int BFA_Int1 { get; set; }
-        public int B28938_Int1 { get; set; }
+        // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
+        public int B28938_Int1 { get; set; } 
+        // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171
         public int B28938_Int2 { get; set; }
         public uint[] Flags { get; set; }
-        public int[] ProxyCreatureID { get; set; }
+        // Used mainly to tie many different mobs to a single CreatureID kill credit.
+        // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
+        public int[] ProxyCreatureID { get; set; } 
         public List<CreatureDisplay> CreatureDisplays { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }

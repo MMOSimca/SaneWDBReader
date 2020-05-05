@@ -16,6 +16,7 @@ namespace WDBReader
         // Used mainly to tie many different mobs to a single CreatureID kill credit.
         // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
         public int[] ProxyCreatureID { get; set; }
+        public int NumCreatureDisplays { get; set; }
         public float BFA_Float1 { get; set; }
         [Ignore]
         public List<CreatureDisplay> CreatureDisplays { get; set; }
@@ -34,7 +35,7 @@ namespace WDBReader
         // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
         public int UIWidgetParentSetID { get; set; } 
         // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
-        public int B28938_Int2 { get; set; }
+        public int UnkConditionID { get; set; }
         public string Title { get; private set; }
         public string TitleAlt { get; private set; }
         public string CursorName { get; private set; }
@@ -88,10 +89,10 @@ namespace WDBReader
                 ds.GetInt(),
             };
 
-            var numCreatureDisplays = ds.GetInt();
+            NumCreatureDisplays = ds.GetInt();
             BFA_Float1 = ds.GetFloat();
             CreatureDisplays = new List<CreatureDisplay>();
-            for (var i = 0; i < numCreatureDisplays; ++i)
+            for (var i = 0; i < NumCreatureDisplays; ++i)
             {
                 CreatureDisplay cd = new CreatureDisplay();
                 cd.CreatureDisplayInfoID = ds.GetInt();
@@ -109,7 +110,7 @@ namespace WDBReader
             VignetteID = ds.GetInt();
             CreatureClassMask = ds.GetInt();
             UIWidgetParentSetID = ds.GetInt();
-            B28938_Int2 = ds.GetInt();
+            UnkConditionID = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

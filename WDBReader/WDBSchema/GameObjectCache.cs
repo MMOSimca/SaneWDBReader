@@ -17,7 +17,7 @@ namespace WDBReader
         public byte NumQuestItems { get; private set; }
         [Ignore]
         public List<int> QuestItems { get; private set; }
-        public int MinLevel { get; private set; }
+        public int ContentTuningID { get; private set; }
 
         public GameObjectCache(DataStore ds, int id)
         {
@@ -50,7 +50,7 @@ namespace WDBReader
                 QuestItems.Add(ds.GetInt());
             }
 
-            MinLevel = ds.GetInt();
+            ContentTuningID = ds.GetInt();
         }
     }
 }

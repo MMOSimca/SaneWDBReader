@@ -1,19 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using CsvHelper.Configuration.Attributes;
+using System.Collections.Generic;
 
 namespace WDBReader
 {
     class CreatureCache
     {
-        public string Title { get; private set; }
-        public string TitleAlt { get; private set; }
-        public string CursorName { get; private set; }
+        public int ID { get; private set; }
+        public bool Leader { get; set; }
+        public string[] Name { get; set; }
+        public string[] NameAlt { get; set; }
+        public uint[] Flags { get; set; }
         public int CreatureType { get; private set; }
         public int CreatureFamily { get; private set; }
         public int Classification { get; private set; }
+        // Used mainly to tie many different mobs to a single CreatureID kill credit.
+        // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
+        public int[] ProxyCreatureID { get; set; }
         public float BFA_Float1 { get; set; }
+        [Ignore]
+        public List<CreatureDisplay> CreatureDisplays { get; set; }
         public float HPMulti { get; private set; }
         public float EnergyMulti { get; private set; }
-        public bool Leader { get; set; }
+        public int NumQuestItems { get; set; }
+        [Ignore]
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }
@@ -21,18 +30,14 @@ namespace WDBReader
         public int TrackingQuestID { get; set; }
         public int VignetteID { get; set; }
         // Some type of 'creature class type' expressed as a bitfield (2^ID); 1 = Warrior, 2 = Rogue, 8 = Caster or something like that
-        public int BFA_Int1 { get; set; }
+        public int CreatureClassMask { get; set; }
         // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
         public int UIWidgetParentSetID { get; set; } 
         // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
         public int B28938_Int2 { get; set; }
-        public uint[] Flags { get; set; }
-        // Used mainly to tie many different mobs to a single CreatureID kill credit.
-        // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
-        public int[] ProxyCreatureID { get; set; } 
-        public List<CreatureDisplay> CreatureDisplays { get; set; }
-        public string[] Name { get; set; }
-        public string[] NameAlt { get; set; }
+        public string Title { get; private set; }
+        public string TitleAlt { get; private set; }
+        public string CursorName { get; private set; }
 
         public struct CreatureDisplay
         {
@@ -41,8 +46,10 @@ namespace WDBReader
             public float Probability { get; set; }
         }
 
-        public CreatureCache(DataStore ds)
+        public CreatureCache(DataStore ds, int id)
         {
+            ID = id;
+
             var titleLength = ds.GetIntByBits(11);
             var titleAltLength = ds.GetIntByBits(11);
             var cursorNameLength = ds.GetIntByBits(6);
@@ -95,12 +102,12 @@ namespace WDBReader
 
             HPMulti = ds.GetFloat();
             EnergyMulti = ds.GetFloat();
-            var numQuestItems = ds.GetInt();
+            NumQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
             TrackingQuestID = ds.GetInt();
             VignetteID = ds.GetInt();
-            BFA_Int1 = ds.GetInt();
+            CreatureClassMask = ds.GetInt();
             UIWidgetParentSetID = ds.GetInt();
             B28938_Int2 = ds.GetInt();
 
@@ -112,7 +119,7 @@ namespace WDBReader
                 CursorName = "";
 
             QuestItems = new List<int>();
-            for (var i = 0; i < numQuestItems; i++)
+            for (var i = 0; i < NumQuestItems; i++)
             {
                 QuestItems.Add(ds.GetInt());
             }

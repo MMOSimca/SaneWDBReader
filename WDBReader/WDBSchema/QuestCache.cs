@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using CsvHelper.Configuration.Attributes;
+using System.Collections.Generic;
 
 namespace WDBReader
 {
@@ -8,7 +8,7 @@ namespace WDBReader
         public int QuestID { get; set; }
         public int QuestType { get; set; }
         public int QuestLevel { get; set; }
-        public int QuestUNK27075 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
+        public int B27075_Int1 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
         public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
         public int QuestMinLevel { get; set; }
@@ -98,8 +98,9 @@ namespace WDBReader
         public uint QuestRewardID { get; set; }
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
-        public int UnkInt31984 { get; set; }
+        public int B31984_Int1 { get; set; }
 
+        [Ignore]
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
         public string Title { get; set; }
@@ -129,12 +130,12 @@ namespace WDBReader
             public string Description { get; set; } // size DescriptionLength
         };
 
-        public QuestCache(DataStore ds)
+        public QuestCache(DataStore ds, int id)
         {
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
             QuestLevel = ds.GetInt();
-            QuestUNK27075 = ds.GetInt();
+            B27075_Int1 = ds.GetInt();
             QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
             QuestMinLevel = ds.GetInt();
@@ -268,7 +269,7 @@ namespace WDBReader
             QuestRewardID = ds.GetUInt();
             ExpansionID = ds.GetInt();
             ManagedWorldStateID = ds.GetInt();
-            UnkInt31984 = ds.GetInt();
+            B31984_Int1 = ds.GetInt();
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);

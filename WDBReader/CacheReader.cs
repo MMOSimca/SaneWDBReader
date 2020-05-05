@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -65,8 +66,77 @@ namespace WDBReader
                     break;
 
                 var buf = rd.ReadBytes(length);
-                var record = Activator.CreateInstance(typeof(T), new object[] { new DataStore(new BinaryReader(new MemoryStream(buf))) }) as T;
+                var record = Activator.CreateInstance(typeof(T), new object[] { new DataStore(new BinaryReader(new MemoryStream(buf))), id }) as T;
                 Records.Add(id, record);
+            }
+        }
+
+        // Output as CSV using CSVHelper
+        public void OutputCSV(string directoryName)
+        {
+            Type baseType = this.GetType().GetGenericArguments()[0];
+            string outputFilename = Path.Combine(directoryName, $"{baseType.Name}_Build_{Build}.csv");
+
+            using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+            using (TextWriter sw = new StreamWriter(fs))
+            using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+            {
+                csv.WriteHeader(baseType);
+                csv.WriteRecords(Records.Values);
+            }
+        }
+    }
+
+    // Class designed to hold multiple different types of cache readers simultaneously
+    class MultiCacheReader
+    {
+        public CacheReader<CreatureCache> CreatureCacheReader { get; private set; }
+        public CacheReader<GameObjectCache> GameObjectCacheReader { get; private set; }
+        public CacheReader<QuestCache> QuestCacheReader { get; private set; }
+
+        public MultiCacheReader()
+        {
+            CreatureCacheReader = null;
+            GameObjectCacheReader = null;
+            QuestCacheReader = null;
+        }
+        public void ReadCache(string filename)
+        {
+            using (var file = File.OpenRead(filename))
+            using (var reader = new BinaryReader(file))
+            {
+                ReadCache(reader);
+            }
+        }
+        public void ReadCache(Stream input)
+        {
+            using (var reader = new BinaryReader(input))
+            {
+                ReadCache(reader);
+            }
+        }
+        public void ReadCache(BinaryReader rd)
+        {
+            // Determine cache type
+            rd.BaseStream.Seek(0, SeekOrigin.Begin);
+            var magicBuf = rd.ReadBytes(4);
+            Array.Reverse(magicBuf);
+            string magic = Encoding.ASCII.GetString(magicBuf);
+
+            // Populate cache of proper type
+            switch (magic)
+            {
+                case "WMOB":
+                    CreatureCacheReader = new CacheReader<CreatureCache>(rd);
+                    break;
+                case "WQST":
+                    GameObjectCacheReader = new CacheReader<GameObjectCache>(rd);
+                    break;
+                case "WGOB":
+                    QuestCacheReader = new CacheReader<QuestCache>(rd);
+                    break;
+                default:
+                    return;
             }
         }
     }

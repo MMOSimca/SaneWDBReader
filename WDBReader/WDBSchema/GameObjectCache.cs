@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CsvHelper.Configuration.Attributes;
+using System.Collections.Generic;
 
 namespace WDBReader
 {
     class GameObjectCache
     {
+        public int ID { get; private set; }
         public int Type { get; private set; }
         public int GameObjectDisplayInfoID { get; private set; }
         public string[] Name { get; private set; }
@@ -13,11 +15,14 @@ namespace WDBReader
         public int[] GameData { get; private set; }
         public float Scale { get; private set; }
         public byte NumQuestItems { get; private set; }
+        [Ignore]
         public List<int> QuestItems { get; private set; }
         public int MinLevel { get; private set; }
 
-        public GameObjectCache(DataStore ds)
+        public GameObjectCache(DataStore ds, int id)
         {
+            ID = id;
+
             Type = ds.GetInt();
             GameObjectDisplayInfoID = ds.GetInt();
 

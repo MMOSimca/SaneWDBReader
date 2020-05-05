@@ -23,8 +23,8 @@ namespace WDBReader
         // Some type of 'creature class type' expressed as a bitfield (2^ID); 1 = Warrior, 2 = Rogue, 8 = Caster or something like that
         public int BFA_Int1 { get; set; }
         // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
-        public int B28938_Int1 { get; set; } 
-        // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171
+        public int UIWidgetParentSetID { get; set; } 
+        // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
         public int B28938_Int2 { get; set; }
         public uint[] Flags { get; set; }
         // Used mainly to tie many different mobs to a single CreatureID kill credit.
@@ -101,7 +101,7 @@ namespace WDBReader
             TrackingQuestID = ds.GetInt();
             VignetteID = ds.GetInt();
             BFA_Int1 = ds.GetInt();
-            B28938_Int1 = ds.GetInt();
+            UIWidgetParentSetID = ds.GetInt();
             B28938_Int2 = ds.GetInt();
 
             Title = ds.GetString(titleLength);

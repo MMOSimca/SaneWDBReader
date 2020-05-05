@@ -38,7 +38,7 @@ namespace WDBReader
             GameData = new int[34];
             for (int i = 0; i < GameData.Length; ++i)
             {
-                GameData[0] = ds.GetInt();
+                GameData[i] = ds.GetInt();
             }
 
             Scale = ds.GetFloat();

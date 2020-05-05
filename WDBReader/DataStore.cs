@@ -6,7 +6,7 @@ namespace WDBReader
 {
     class DataStore
     {
-        BinaryReader r;
+        readonly BinaryReader r;
         public DataStore(BinaryReader rd)
         {
             r = rd;

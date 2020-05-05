@@ -129,10 +129,10 @@ namespace WDBReader
                 case "WMOB":
                     CreatureCacheReader = new CacheReader<CreatureCache>(rd);
                     break;
-                case "WQST":
+                case "WGOB":
                     GameObjectCacheReader = new CacheReader<GameObjectCache>(rd);
                     break;
-                case "WGOB":
+                case "WQST":
                     QuestCacheReader = new CacheReader<QuestCache>(rd);
                     break;
                 default:

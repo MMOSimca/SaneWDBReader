@@ -10,21 +10,46 @@ namespace WDBReader
         public string Magic { get; private set; }
         public int Build { get; private set; }
         public string Locale { get; private set; }
-        public int unk0 { get; private set; }
-        public int unk1 { get; private set; }
-        public uint unk2 { get; private set; }
+        public int RecordSize { get; private set; }
+        public int RecordVersion { get; private set; }
+        public int CacheVersion { get; private set; }
         public SortedDictionary<int, T> Records { get; private set; }
 
-        public CacheReader(string _magic, BinaryReader rd)
+        // A few different constructors with simple arguments
+        public CacheReader(string filename)
         {
-            Magic = _magic;
+            using (var file = File.OpenRead(filename))
+            using (var reader = new BinaryReader(file))
+            {
+                ParseWDB(reader);
+            }
+        }
+        public CacheReader(Stream input)
+        {
+            using (var reader = new BinaryReader(input))
+            {
+                ParseWDB(reader);
+            }
+        }
+        public CacheReader(BinaryReader rd)
+        {
+            ParseWDB(rd);
+        }
+
+        // Main function to parse the beginning parts of the WDB and then to pass off the rows to the individual cache class constructors
+        private void ParseWDB(BinaryReader rd)
+        {
+            rd.BaseStream.Seek(0, SeekOrigin.Begin);
+            var magicBuf = rd.ReadBytes(4);
+            Array.Reverse(magicBuf);
+            Magic = Encoding.ASCII.GetString(magicBuf);
             Build = rd.ReadInt32();
             var localeBuf = rd.ReadBytes(4);
             Array.Reverse(localeBuf);
             Locale = Encoding.ASCII.GetString(localeBuf);
-            unk0 = rd.ReadInt32();
-            unk1 = rd.ReadInt32();
-            unk2 = rd.ReadUInt32();
+            RecordSize = rd.ReadInt32();
+            RecordVersion = rd.ReadInt32();
+            CacheVersion = rd.ReadInt32();
 
             if (Locale != "enUS")
             {
@@ -41,8 +66,6 @@ namespace WDBReader
 
                 var buf = rd.ReadBytes(length);
                 var record = Activator.CreateInstance(typeof(T), new object[] { new DataStore(new BinaryReader(new MemoryStream(buf))) }) as T;
-                // Originally was just: var record = new GameObjectCache(new DataStore(new BinaryReader(new MemoryStream(buf))));
-                // Changed it so that template variables could be used
                 Records.Add(id, record);
             }
         }

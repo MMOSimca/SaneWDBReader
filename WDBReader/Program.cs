@@ -11,6 +11,7 @@ namespace WDBReader
             if (args.Length == 0)
             {
                 Console.WriteLine("Usage error: WDBReader.exe PathToWDBFile1 [PathToWDBFile2] [PathToWDBFile3] (etc)");
+                return;
             }
 
             // Read caches (create MultiCacheReader, read cache, output all potential CacheReaders as CSVs)
@@ -20,7 +21,7 @@ namespace WDBReader
                 mcr.ReadCache(args[i]);
                 mcr.CreatureCacheReader?.OutputCSV(Path.GetDirectoryName(args[i]));
                 mcr.GameObjectCacheReader?.OutputCSV(Path.GetDirectoryName(args[i]));
-                mcr.CreatureCacheReader?.OutputCSV(Path.GetDirectoryName(args[i]));
+                mcr.QuestCacheReader?.OutputCSV(Path.GetDirectoryName(args[i]));
             }
         }
     }

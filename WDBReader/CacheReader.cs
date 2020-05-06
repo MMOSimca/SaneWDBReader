@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using WDBReader.WDBSchema;
 
 namespace WDBReader
 {
@@ -81,7 +82,9 @@ namespace WDBReader
             using (TextWriter sw = new StreamWriter(fs))
             using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
             {
-                csv.WriteHeader(baseType);
+                csv.Configuration.RegisterClassMap<CreatureCacheMap>();
+                csv.Configuration.RegisterClassMap<GameObjectCacheMap>();
+                csv.Configuration.RegisterClassMap<QuestCacheMap>();
                 csv.WriteRecords(Records.Values);
             }
         }

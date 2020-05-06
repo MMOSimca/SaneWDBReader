@@ -1,5 +1,4 @@
-﻿using CsvHelper.Configuration.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace WDBReader
 {
@@ -18,12 +17,10 @@ namespace WDBReader
         public int[] ProxyCreatureID { get; set; }
         public int NumCreatureDisplays { get; set; }
         public float BFA_Float1 { get; set; }
-        [Ignore]
         public List<CreatureDisplay> CreatureDisplays { get; set; }
         public float HPMulti { get; private set; }
         public float EnergyMulti { get; private set; }
         public int NumQuestItems { get; set; }
-        [Ignore]
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }

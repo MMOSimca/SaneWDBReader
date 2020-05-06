@@ -1,5 +1,4 @@
-﻿using CsvHelper.Configuration.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace WDBReader
 {
@@ -15,7 +14,6 @@ namespace WDBReader
         public int[] GameData { get; private set; }
         public float Scale { get; private set; }
         public byte NumQuestItems { get; private set; }
-        [Ignore]
         public List<int> QuestItems { get; private set; }
         public int ContentTuningID { get; private set; }
 

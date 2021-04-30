@@ -6,8 +6,11 @@ namespace WDBReader
     {
         public int QuestID { get; set; }
         public int QuestType { get; set; }
+        public int QuestLevel { get; set; }
         public int B27075_Int1 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
+        public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
+        public int QuestMinLevel { get; set; }
         public int QuestSortID { get; set; }
         public int QuestInfoID { get; set; }
         public int SuggestedGroupNum { get; set; }
@@ -18,7 +21,7 @@ namespace WDBReader
         public int RewardMoneyDifficulty { get; set; }
         public float RewardMoneyMultiplier { get; set; }
         public int RewardBonusMoney { get; set; }
-        public int[] RewardDisplaySpell { get; set; } // size 3
+        public int[] RewardDisplaySpell { get; set; }
         public int RewardSpell { get; set; }
         public int RewardHonorAddition { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
         public float RewardHonorMultiplier { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
@@ -26,7 +29,9 @@ namespace WDBReader
         public float RewardArtifactXPMultiplier { get; set; }
         public int RewardArtifactCategoryID { get; set; }
         public int ProvidedItem { get; set; }
-        public uint[] Flags { get; set; } // size 3
+        public uint Flags { get; set; }
+        public uint Flags2 { get; set; }
+        public uint Flags3 { get; set; }
 
         // The player gets all of these rewards
         public int[] RewardFixedItemID { get; set; } // size 4
@@ -127,8 +132,11 @@ namespace WDBReader
         {
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
+            QuestLevel = ds.GetInt();
             B27075_Int1 = ds.GetInt();
+            QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
+            QuestMinLevel = ds.GetInt();
             QuestSortID = ds.GetInt();
             QuestInfoID = ds.GetInt();
             SuggestedGroupNum = ds.GetInt();
@@ -151,9 +159,9 @@ namespace WDBReader
             RewardArtifactCategoryID = ds.GetInt();
             ProvidedItem = ds.GetInt();
             Flags = new uint[3];
-            Flags[0] = ds.GetUInt();
-            Flags[1] = ds.GetUInt();
-            Flags[2] = ds.GetUInt();
+            Flags = ds.GetUInt();
+            Flags2 = ds.GetUInt();
+            Flags3 = ds.GetUInt();
 
             RewardFixedItemID = new int[4];
             RewardFixedItemQuantity = new int[4];

@@ -29,9 +29,7 @@ namespace WDBReader
         public float RewardArtifactXPMultiplier { get; set; }
         public int RewardArtifactCategoryID { get; set; }
         public int ProvidedItem { get; set; }
-        public uint Flags { get; set; }
-        public uint Flags2 { get; set; }
-        public uint Flags3 { get; set; }
+        public uint[] Flags { get; set; }
 
         // The player gets all of these rewards
         public int[] RewardFixedItemID { get; set; } // size 4
@@ -159,9 +157,9 @@ namespace WDBReader
             RewardArtifactCategoryID = ds.GetInt();
             ProvidedItem = ds.GetInt();
             Flags = new uint[3];
-            Flags = ds.GetUInt();
-            Flags2 = ds.GetUInt();
-            Flags3 = ds.GetUInt();
+            Flags[0] = ds.GetUInt();
+            Flags[1] = ds.GetUInt();
+            Flags[2] = ds.GetUInt();
 
             RewardFixedItemID = new int[4];
             RewardFixedItemQuantity = new int[4];

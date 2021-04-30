@@ -18,7 +18,7 @@ namespace WDBReader
         public int RewardMoneyDifficulty { get; set; }
         public float RewardMoneyMultiplier { get; set; }
         public int RewardBonusMoney { get; set; }
-        public int[] RewardDisplaySpell { get; set; } // size 3
+        public int NumRewardDisplaySpells { get; set; }
         public int RewardSpell { get; set; }
         public int RewardHonorAddition { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
         public float RewardHonorMultiplier { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
@@ -94,6 +94,8 @@ namespace WDBReader
         public int ManagedWorldStateID { get; set; }
         public int B31984_Int1 { get; set; }
 
+        public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
+
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
         public string Title { get; set; }
@@ -105,6 +107,12 @@ namespace WDBReader
         public string PortraitTurnInText { get; set; }
         public string PortraitTurnInName { get; set; }
         public string CompletionBlurb { get; set; }
+
+        public struct RewardDisplaySpell
+        {
+            public int RewardDisplaySpellID { get; set; }
+            public int B36753_Int1 { get; set; }
+        }
 
         // We store Quest Objective information in a custom structure due to the varying number of entries and large size
         public struct QuestObjective
@@ -139,10 +147,7 @@ namespace WDBReader
             RewardMoneyDifficulty = ds.GetInt();
             RewardMoneyMultiplier = ds.GetFloat();
             RewardBonusMoney = ds.GetInt();
-            RewardDisplaySpell = new int[3];
-            RewardDisplaySpell[0] = ds.GetInt();
-            RewardDisplaySpell[1] = ds.GetInt();
-            RewardDisplaySpell[2] = ds.GetInt();
+            NumRewardDisplaySpells = ds.GetInt();
             RewardSpell = ds.GetInt();
             RewardHonorAddition = ds.GetInt();
             RewardHonorMultiplier = ds.GetFloat();
@@ -261,6 +266,15 @@ namespace WDBReader
             ExpansionID = ds.GetInt();
             ManagedWorldStateID = ds.GetInt();
             B31984_Int1 = ds.GetInt();
+
+            RewardDisplaySpells = new List<RewardDisplaySpell>();
+            for (var i = 0; i < NumRewardDisplaySpells; ++i)
+            {
+                RewardDisplaySpell rds = new RewardDisplaySpell();
+                rds.RewardDisplaySpellID = ds.GetInt();
+                rds.B36753_Int1 = ds.GetInt();
+                RewardDisplaySpells.Add(rds);
+            }
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);

@@ -20,7 +20,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardMoneyDifficulty);
             Map(m => m.RewardMoneyMultiplier);
             Map(m => m.RewardBonusMoney);
-            Map(m => m.RewardDisplaySpell).Index(14, 16);
+            Map(m => m.NumRewardDisplaySpells);
             Map(m => m.RewardSpell);
             Map(m => m.RewardHonorAddition);
             Map(m => m.RewardHonorMultiplier);
@@ -28,14 +28,14 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardArtifactXPMultiplier);
             Map(m => m.RewardArtifactCategoryID);
             Map(m => m.ProvidedItem);
-            Map(m => m.Flags).Index(24, 26);
-            Map(m => m.RewardFixedItemID).Index(27, 30);
-            Map(m => m.RewardFixedItemQuantity).Index(31, 34);
-            Map(m => m.ItemDropID).Index(35, 38);
-            Map(m => m.ItemDropQuantity).Index(39, 42);
-            Map(m => m.RewardChoiceItemID).Index(43, 48);
-            Map(m => m.RewardChoiceItemQuantity).Index(49, 54);
-            Map(m => m.RewardChoiceItemDisplayID).Index(55, 60);
+            Map(m => m.Flags).Index(22, 24);
+            Map(m => m.RewardFixedItemID).Index(25, 28);
+            Map(m => m.RewardFixedItemQuantity).Index(29, 32);
+            Map(m => m.ItemDropID).Index(33, 36);
+            Map(m => m.ItemDropQuantity).Index(37, 40);
+            Map(m => m.RewardChoiceItemID).Index(41, 46);
+            Map(m => m.RewardChoiceItemQuantity).Index(47, 52);
+            Map(m => m.RewardChoiceItemDisplayID).Index(53, 58);
             Map(m => m.POIContinent);
             Map(m => m.POIx);
             Map(m => m.POIy);
@@ -47,13 +47,13 @@ namespace WDBReader.WDBSchema
             Map(m => m.PortraitGiverDisplayID);
             Map(m => m.BFA_UnkDisplayID);
             Map(m => m.PortraitTurnInDisplayID);
-            Map(m => m.RewardFactionID).Index(72, 76);
-            Map(m => m.RewardFactionValue).Index(77, 81);
-            Map(m => m.RewardFactionOverride).Index(82, 86);
-            Map(m => m.RewardFactionGainMaxRank).Index(87, 91);
+            Map(m => m.RewardFactionID).Index(70, 74);
+            Map(m => m.RewardFactionValue).Index(75, 79);
+            Map(m => m.RewardFactionOverride).Index(80, 84);
+            Map(m => m.RewardFactionGainMaxRank).Index(85, 89);
             Map(m => m.RewardFactionFlags);
-            Map(m => m.RewardCurrencyID).Index(93, 96);
-            Map(m => m.RewardCurrencyQuantity).Index(97, 100);
+            Map(m => m.RewardCurrencyID).Index(91, 94);
+            Map(m => m.RewardCurrencyQuantity).Index(95, 98);
             Map(m => m.AcceptedSoundKitID);
             Map(m => m.CompleteSoundKitID);
             Map(m => m.AreaGroupID);
@@ -64,6 +64,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
             Map(m => m.B31984_Int1);
+			//List<RewardDisplaySpell>
             Map(m => m.NumObjectives);
             //List<QuestObjective>
             Map(m => m.Title);

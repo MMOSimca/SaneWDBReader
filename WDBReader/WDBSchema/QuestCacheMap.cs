@@ -65,8 +65,6 @@ namespace WDBReader.WDBSchema
             Map(m => m.RaceFlags);
             Map(m => m.QuestRewardID);
             Map(m => m.ExpansionID);
-            Map(m => m.ManagedWorldStateID);
-            Map(m => m.B31984_Int1);
             Map(m => m.NumObjectives);
             //List<QuestObjective>
             Map(m => m.Title);

@@ -265,8 +265,6 @@ namespace WDBReader
             RaceFlags = ds.GetUInt64();
             QuestRewardID = ds.GetUInt();
             ExpansionID = ds.GetInt();
-            ManagedWorldStateID = ds.GetInt();
-            B31984_Int1 = ds.GetInt();
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);

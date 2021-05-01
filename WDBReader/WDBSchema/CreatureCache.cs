@@ -5,6 +5,7 @@ namespace WDBReader
     class CreatureCache
     {
         public int ID { get; private set; }
+        public bool CLS_Bit1 { get; set; }
         public bool Leader { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }
@@ -15,6 +16,7 @@ namespace WDBReader
         // Used mainly to tie many different mobs to a single CreatureID kill credit.
         // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
         public int[] ProxyCreatureID { get; set; }
+        public int CLS_Int1 { get; set; }
         public int NumCreatureDisplays { get; set; }
         public float BFA_Float1 { get; set; }
         public List<CreatureDisplay> CreatureDisplays { get; set; }
@@ -29,10 +31,6 @@ namespace WDBReader
         public int VignetteID { get; set; }
         // Some type of 'creature class type' expressed as a bitfield (2^ID); 1 = Warrior, 2 = Rogue, 8 = Caster or something like that
         public int CreatureClassMask { get; set; }
-        // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
-        public int UIWidgetParentSetID { get; set; } 
-        // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
-        public int UnkConditionID { get; set; }
         public string Title { get; private set; }
         public string TitleAlt { get; private set; }
         public string CursorName { get; private set; }
@@ -51,6 +49,7 @@ namespace WDBReader
             var titleLength = ds.GetIntByBits(11);
             var titleAltLength = ds.GetIntByBits(11);
             var cursorNameLength = ds.GetIntByBits(6);
+            CLS_Bit1 = ds.GetBool();
             Leader = ds.GetBool();
             var name0Length = ds.GetIntByBits(11);
             var nameAlt0Length = ds.GetIntByBits(11);
@@ -86,6 +85,7 @@ namespace WDBReader
                 ds.GetInt(),
             };
 
+            CLS_Int1 = ds.GetInt();
             NumCreatureDisplays = ds.GetInt();
             BFA_Float1 = ds.GetFloat();
             CreatureDisplays = new List<CreatureDisplay>();
@@ -106,8 +106,6 @@ namespace WDBReader
             TrackingQuestID = ds.GetInt();
             VignetteID = ds.GetInt();
             CreatureClassMask = ds.GetInt();
-            UIWidgetParentSetID = ds.GetInt();
-            UnkConditionID = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

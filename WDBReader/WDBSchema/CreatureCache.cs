@@ -16,10 +16,10 @@ namespace WDBReader
         // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
         public int[] ProxyCreatureID { get; set; }
         public int NumCreatureDisplays { get; set; }
-        public float BFA_Float1 { get; set; }
+        public float TotalProbability { get; set; }
         public List<CreatureDisplay> CreatureDisplays { get; set; }
-        public float HPMulti { get; private set; }
-        public float EnergyMulti { get; private set; }
+        public float HPMultiplier { get; private set; }
+        public float EnergyMultiplier { get; private set; }
         public int NumQuestItems { get; set; }
         public List<int> QuestItems { get; set; }
         public int CreatureMovementInfoID { get; set; }
@@ -29,10 +29,18 @@ namespace WDBReader
         public int VignetteID { get; set; }
         // Some type of 'creature class type' expressed as a bitfield (2^ID); 1 = Warrior, 2 = Rogue, 8 = Caster or something like that
         public int CreatureClassMask { get; set; }
+        // Added in Patch 9.1.0, exact build unknown
+        public int CreatureDifficultyID { get; set; }
+        // Added in Build 28202?
         // Some kind of FK ID field only relevant to 'bodyguard-like' creatures that have friendship reputations
-        public int UIWidgetParentSetID { get; set; } 
+        public int UIWidgetParentSetID { get; set; }
+        // Added in Patch 9.0.1, exact build unknown
         // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
-        public int UnkConditionID { get; set; }
+        public int UIWidgetSetUnitConditionID { get; set; }
+        // Added in Build 34769?
+        public int BFA_Int1 { get; set; }
+        // Added in Build 34769?
+        public int BFA_Int2 { get; set; }
         public string Title { get; private set; }
         public string TitleAlt { get; private set; }
         public string CursorName { get; private set; }
@@ -87,7 +95,7 @@ namespace WDBReader
             };
 
             NumCreatureDisplays = ds.GetInt();
-            BFA_Float1 = ds.GetFloat();
+            TotalProbability = ds.GetFloat();
             CreatureDisplays = new List<CreatureDisplay>();
             for (var i = 0; i < NumCreatureDisplays; ++i)
             {
@@ -98,16 +106,19 @@ namespace WDBReader
                 CreatureDisplays.Add(cd);
             }
 
-            HPMulti = ds.GetFloat();
-            EnergyMulti = ds.GetFloat();
+            HPMultiplier = ds.GetFloat();
+            EnergyMultiplier = ds.GetFloat();
             NumQuestItems = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
             TrackingQuestID = ds.GetInt();
             VignetteID = ds.GetInt();
             CreatureClassMask = ds.GetInt();
+            CreatureDifficultyID = ds.GetInt();
             UIWidgetParentSetID = ds.GetInt();
-            UnkConditionID = ds.GetInt();
+            UIWidgetSetUnitConditionID = ds.GetInt();
+            BFA_Int1 = ds.GetInt();
+            BFA_Int2 = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

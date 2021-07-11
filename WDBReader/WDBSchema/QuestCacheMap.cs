@@ -8,8 +8,8 @@ namespace WDBReader.WDBSchema
         {
             Map(m => m.QuestID);
             Map(m => m.QuestType);
-            Map(m => m.B27075_Int1);
             Map(m => m.QuestPackageID);
+            Map(m => m.ContentTuningID);
             Map(m => m.QuestSortID);
             Map(m => m.QuestInfoID);
             Map(m => m.SuggestedGroupNum);
@@ -45,8 +45,9 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardSkillLineID);
             Map(m => m.RewardNumSkillUps);
             Map(m => m.PortraitGiverDisplayID);
-            Map(m => m.BFA_UnkDisplayID);
+            Map(m => m.PortraitGiverMountDisplayID);
             Map(m => m.PortraitTurnInDisplayID);
+            Map(m => m.PortraitModelSceneID);
             Map(m => m.RewardFactionID).Index(70, 74);
             Map(m => m.RewardFactionValue).Index(75, 79);
             Map(m => m.RewardFactionOverride).Index(80, 84);
@@ -63,7 +64,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.QuestRewardID);
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
-            Map(m => m.B31984_Int1);
+            Map(m => m.QuestSessionBonus);
 			//List<RewardDisplaySpell>
             Map(m => m.NumObjectives);
             //List<QuestObjective>

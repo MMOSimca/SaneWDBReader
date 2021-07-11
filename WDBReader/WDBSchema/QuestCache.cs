@@ -6,8 +6,8 @@ namespace WDBReader
     {
         public int QuestID { get; set; }
         public int QuestType { get; set; }
-        public int B27075_Int1 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
         public int QuestPackageID { get; set; }
+        public int ContentTuningID { get; set; }
         public int QuestSortID { get; set; }
         public int QuestInfoID { get; set; }
         public int SuggestedGroupNum { get; set; }
@@ -51,8 +51,9 @@ namespace WDBReader
         public int RewardSkillLineID { get; set; }
         public int RewardNumSkillUps { get; set; }
         public int PortraitGiverDisplayID { get; set; }
-        public int BFA_UnkDisplayID { get; set; }
+        public int PortraitGiverMountDisplayID { get; set; }
         public int PortraitTurnInDisplayID { get; set; }
+        public int PortraitModelSceneID { get; set; }
 
         // The specified FactionID gains X rep (where X is either the override amount or the 'value' multiplied by some unknown factor)
         public int[] RewardFactionID { get; set; } // size 5
@@ -92,7 +93,7 @@ namespace WDBReader
         public uint QuestRewardID { get; set; }
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
-        public int B31984_Int1 { get; set; }
+        public int QuestSessionBonus { get; set; }
 
         public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
 
@@ -111,7 +112,7 @@ namespace WDBReader
         public struct RewardDisplaySpell
         {
             public int RewardDisplaySpellID { get; set; }
-            public int B36753_Int1 { get; set; }
+            public int RewardDisplayPlayerConditionID { get; set; }
         }
 
         // We store Quest Objective information in a custom structure due to the varying number of entries and large size
@@ -135,8 +136,8 @@ namespace WDBReader
         {
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
-            B27075_Int1 = ds.GetInt();
             QuestPackageID = ds.GetInt();
+            ContentTuningID = ds.GetInt();
             QuestSortID = ds.GetInt();
             QuestInfoID = ds.GetInt();
             SuggestedGroupNum = ds.GetInt();
@@ -215,8 +216,9 @@ namespace WDBReader
             RewardSkillLineID = ds.GetInt();
             RewardNumSkillUps = ds.GetInt();
             PortraitGiverDisplayID = ds.GetInt();
-            BFA_UnkDisplayID = ds.GetInt();
+            PortraitGiverMountDisplayID = ds.GetInt();
             PortraitTurnInDisplayID = ds.GetInt();
+            PortraitModelSceneID = ds.GetInt();
 
             RewardFactionID = new int[5];
             RewardFactionValue = new int[5];
@@ -265,14 +267,14 @@ namespace WDBReader
             QuestRewardID = ds.GetUInt();
             ExpansionID = ds.GetInt();
             ManagedWorldStateID = ds.GetInt();
-            B31984_Int1 = ds.GetInt();
+            QuestSessionBonus = ds.GetInt();
 
             RewardDisplaySpells = new List<RewardDisplaySpell>();
             for (var i = 0; i < NumRewardDisplaySpells; ++i)
             {
                 RewardDisplaySpell rds = new RewardDisplaySpell();
                 rds.RewardDisplaySpellID = ds.GetInt();
-                rds.B36753_Int1 = ds.GetInt();
+                rds.RewardDisplayPlayerConditionID = ds.GetInt();
                 RewardDisplaySpells.Add(rds);
             }
 

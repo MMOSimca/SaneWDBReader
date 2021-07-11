@@ -28,8 +28,6 @@ namespace WDBReader.WDBSchema
             Map(m => m.CreatureDifficultyID);
             Map(m => m.UIWidgetParentSetID);
             Map(m => m.UIWidgetSetUnitConditionID);
-            Map(m => m.BFA_Int1);
-            Map(m => m.BFA_Int2);
             Map(m => m.Title);
             Map(m => m.TitleAlt);
             Map(m => m.CursorName);

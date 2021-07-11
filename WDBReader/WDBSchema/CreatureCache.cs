@@ -37,10 +37,6 @@ namespace WDBReader
         // Added in Patch 9.0.1, exact build unknown
         // Only used once, for the Nazjatar bodyguard-like' creatures; that value is 4171 - possibly CombatConditionID
         public int UIWidgetSetUnitConditionID { get; set; }
-        // Added in Build 34769?
-        public int BFA_Int1 { get; set; }
-        // Added in Build 34769?
-        public int BFA_Int2 { get; set; }
         public string Title { get; private set; }
         public string TitleAlt { get; private set; }
         public string CursorName { get; private set; }
@@ -117,8 +113,6 @@ namespace WDBReader
             CreatureDifficultyID = ds.GetInt();
             UIWidgetParentSetID = ds.GetInt();
             UIWidgetSetUnitConditionID = ds.GetInt();
-            BFA_Int1 = ds.GetInt();
-            BFA_Int2 = ds.GetInt();
 
             Title = ds.GetString(titleLength);
             TitleAlt = ds.GetString(titleAltLength);

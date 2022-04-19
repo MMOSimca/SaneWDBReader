@@ -54,8 +54,9 @@ namespace WDBReader
         public int RewardSkillLineID { get; set; }
         public int RewardNumSkillUps { get; set; }
         public int PortraitGiverDisplayID { get; set; }
-        public int BFA_UnkDisplayID { get; set; }
+        public int PortraitGiverMountDisplayID { get; set; }
         public int PortraitTurnInDisplayID { get; set; }
+        public int PortraitModelSceneID { get; set; }
 
         // The specified FactionID gains X rep (where X is either the override amount or the 'value' multiplied by some unknown factor)
         public int[] RewardFactionID { get; set; } // size 5
@@ -216,8 +217,9 @@ namespace WDBReader
             RewardSkillLineID = ds.GetInt();
             RewardNumSkillUps = ds.GetInt();
             PortraitGiverDisplayID = ds.GetInt();
-            BFA_UnkDisplayID = ds.GetInt();
+            PortraitGiverMountDisplayID = ds.GetInt();
             PortraitTurnInDisplayID = ds.GetInt();
+            PortraitModelSceneID = ds.GetInt(); // Is it really this for TBC Classic? It could be RewardTalents returning. Can't tell with the data.
 
             RewardFactionID = new int[5];
             RewardFactionValue = new int[5];

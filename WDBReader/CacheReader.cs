@@ -87,6 +87,36 @@ namespace WDBReader
                 csv.Configuration.RegisterClassMap<QuestCacheMap>();
                 csv.WriteRecords(Records.Values);
             }
+
+            // Output QuestObjectives structs to separate CSV when reading QuestCache
+            if (baseType == typeof(QuestCache))
+            {
+                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestObjectives_Build_{Build}.csv");
+
+                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+                using (TextWriter sw = new StreamWriter(fs))
+                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+                {
+                    csv.Configuration.RegisterClassMap<QuestObjectiveMap>();
+
+                    // Manually write out rows while iterating the structure
+                    csv.WriteHeader<QuestObjective>();
+                    csv.NextRecord();
+                    foreach (var row in Records.Values)
+                    {
+                        // In theory, NumObjectives and Objectives.Count are equal here
+                        var objectives = (row as QuestCache).Objectives;
+                        if (objectives.Count > 0)
+                        {
+                            foreach (var objective in objectives)
+                            {
+                                csv.WriteRecord(objective);
+                                csv.NextRecord();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

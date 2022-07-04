@@ -109,23 +109,6 @@ namespace WDBReader
         public string PortraitTurnInName { get; set; }
         public string CompletionBlurb { get; set; }
 
-        // We store Quest Objective information in a custom structure due to the varying number of entries and large size
-        public struct QuestObjective
-        {
-            public int ID { get; set; }
-            public byte Type { get; set; }
-            public sbyte StorageIndex { get; set; }
-            public int AssetID { get; set; }
-            public int Amount { get; set; }
-            public uint Flags { get; set; }
-            public uint Flags2 { get; set; }
-            public float PercentAmount { get; set; }
-            public int NumVisualEffects { get; set; } // Technically, it's fine to not store this
-            public List<int> VisualEffects { get; set; } // size NumVisualEffects
-            //public byte DescriptionLength;
-            public string Description { get; set; } // size DescriptionLength
-        };
-
         public QuestCache(DataStore ds, int id)
         {
             QuestID = ds.GetInt();
@@ -283,13 +266,15 @@ namespace WDBReader
             for (var i = 0; i < NumObjectives; ++i)
             {
                 QuestObjective obj = new QuestObjective();
+                obj.QuestID = QuestID; // Just for convenience
                 obj.ID = ds.GetInt();
                 obj.Type = ds.GetByte();
                 obj.StorageIndex = (sbyte)ds.GetByte();
                 obj.AssetID = ds.GetInt();
                 obj.Amount = ds.GetInt();
-                obj.Flags = ds.GetUInt();
-                obj.Flags2 = ds.GetUInt();
+                obj.Flags = new uint[2];
+                obj.Flags[0] = ds.GetUInt();
+                obj.Flags[1] = ds.GetUInt();
                 obj.PercentAmount = ds.GetFloat();
 
                 // You may not want to use this visual effects data, since lists aren't very SQL-compatible and we use this information for literally nothing at the moment.

@@ -65,8 +65,12 @@ namespace WDBReader.WDBSchema
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
             Map(m => m.QuestSessionBonus);
-			//List<RewardDisplaySpell>
+            Map(m => m.Int_44649);
+            Map(m => m.NumConditionalFullTexts);
+            Map(m => m.NumConditionalCompletionBlurbs);
+            //List<RewardDisplaySpell>
             //List<QuestObjective> - see QuestObjectiveMap for further info
+            Map(m => m.Bool_44649);
             Map(m => m.Title);
             Map(m => m.Summary);
             Map(m => m.FullText);
@@ -76,6 +80,8 @@ namespace WDBReader.WDBSchema
             Map(m => m.PortraitTurnInText);
             Map(m => m.PortraitTurnInName);
             Map(m => m.CompletionBlurb);
+            //List<ConditionalText> ConditionalFullTexts
+            //List<ConditionalText> ConditionalCompletionBlurbs
         }
     }
 }

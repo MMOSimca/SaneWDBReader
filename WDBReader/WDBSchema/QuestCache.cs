@@ -94,6 +94,11 @@ namespace WDBReader
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
         public int QuestSessionBonus { get; set; }
+        public int Int_44649 { get; set; } // Possibly NumConditionalSummarys?
+        public int NumConditionalFullTexts { get; set; }
+        public int NumConditionalCompletionBlurbs { get; set; }
+
+        public bool Bool_44649 { get; set; } // at the end of bitpacked text lengths
 
         public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
 
@@ -108,11 +113,20 @@ namespace WDBReader
         public string PortraitTurnInText { get; set; }
         public string PortraitTurnInName { get; set; }
         public string CompletionBlurb { get; set; }
+        public List<ConditionalText> ConditionalFullTexts { get; set; } // size NumConditionalFullTexts
+        public List<ConditionalText> ConditionalCompletionBlurbs { get; set; } // size NumConditionalCompletionBlurbs
 
         public struct RewardDisplaySpell
         {
             public int RewardDisplaySpellID { get; set; }
             public int RewardDisplayPlayerConditionID { get; set; }
+        }
+
+        public struct ConditionalText
+        {
+            public int PlayerConditionID { get; set; }
+            public int Int_44649 { get; set; }
+            public string Text { get; set; }
         }
 
         public QuestCache(DataStore ds, int id)
@@ -252,6 +266,10 @@ namespace WDBReader
             ManagedWorldStateID = ds.GetInt();
             QuestSessionBonus = ds.GetInt();
 
+            Int_44649 = ds.GetInt();
+            NumConditionalFullTexts = ds.GetInt();
+            NumConditionalCompletionBlurbs = ds.GetInt();
+
             RewardDisplaySpells = new List<RewardDisplaySpell>();
             for (var i = 0; i < NumRewardDisplaySpells; ++i)
             {
@@ -271,6 +289,7 @@ namespace WDBReader
             var portraitTurnInTextLength = ds.GetIntByBits(10);
             var portraitTurnInNameLength = ds.GetIntByBits(8);
             var completionBlurbLength = ds.GetIntByBits(11);
+            Bool_44649 = ds.GetBool();
             ds.Flush(); // Reset bit position and advance stream position to next byte
 
             // Populate quest objectives
@@ -310,6 +329,30 @@ namespace WDBReader
             PortraitTurnInText = ds.GetString(portraitTurnInTextLength);
             PortraitTurnInName = ds.GetString(portraitTurnInNameLength);
             CompletionBlurb = ds.GetString(completionBlurbLength);
+
+            // Conditional Text Blocks
+            ConditionalFullTexts = new List<ConditionalText>();
+            for (var i = 0; i < NumConditionalFullTexts; ++i)
+            {
+                ConditionalText condText = new ConditionalText();
+                condText.PlayerConditionID = ds.GetInt();
+                condText.Int_44649 = ds.GetInt();
+                var textLength = ds.GetIntByBits(12);
+                ds.Flush(); // Reset bit position and advance stream position to next byte
+                condText.Text = ds.GetString(textLength);
+                ConditionalFullTexts.Add(condText);
+            }
+            ConditionalCompletionBlurbs = new List<ConditionalText>();
+            for (var i = 0; i < NumConditionalCompletionBlurbs; ++i)
+            {
+                ConditionalText condText = new ConditionalText();
+                condText.PlayerConditionID = ds.GetInt();
+                condText.Int_44649 = ds.GetInt();
+                var textLength = ds.GetIntByBits(12);
+                ds.Flush(); // Reset bit position and advance stream position to next byte
+                condText.Text = ds.GetString(textLength);
+                ConditionalCompletionBlurbs.Add(condText);
+            }
         }
     }
 }

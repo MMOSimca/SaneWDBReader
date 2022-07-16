@@ -66,7 +66,6 @@ namespace WDBReader.WDBSchema
             Map(m => m.ManagedWorldStateID);
             Map(m => m.QuestSessionBonus);
 			//List<RewardDisplaySpell>
-            Map(m => m.NumObjectives);
             //List<QuestObjective> - see QuestObjectiveMap for further info
             Map(m => m.Title);
             Map(m => m.Summary);

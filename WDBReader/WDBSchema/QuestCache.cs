@@ -252,7 +252,7 @@ namespace WDBReader
             // String sizes
             var titleLength = ds.GetIntByBits(9);
             var summaryLength = ds.GetIntByBits(12);
-            var textLength = ds.GetIntByBits(12);
+            var fullTextLength = ds.GetIntByBits(12);
             var trackerTextLength = ds.GetIntByBits(9);
             var portraitGiverTextLength = ds.GetIntByBits(10);
             var portraitGiverNameLength = ds.GetIntByBits(8);
@@ -291,7 +291,7 @@ namespace WDBReader
             // Strings
             Title = ds.GetString(titleLength);
             Summary = ds.GetString(summaryLength);
-            FullText = ds.GetString(textLength);
+            FullText = ds.GetString(fullTextLength);
             TrackerText = ds.GetString(trackerTextLength);
             PortraitGiverText = ds.GetString(portraitGiverTextLength);
             PortraitGiverName = ds.GetString(portraitGiverNameLength);

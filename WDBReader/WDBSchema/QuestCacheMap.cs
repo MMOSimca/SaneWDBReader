@@ -65,12 +65,12 @@ namespace WDBReader.WDBSchema
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
             Map(m => m.QuestSessionBonus);
-            Map(m => m.Int_44649);
+            Map(m => m.QuestGiverCreatureID);
             Map(m => m.NumConditionalFullTexts);
             Map(m => m.NumConditionalCompletionBlurbs);
             //List<RewardDisplaySpell>
             //List<QuestObjective> - see QuestObjectiveMap for further info
-            Map(m => m.Bool_44649);
+            Map(m => m.ReadyForTranslation);
             Map(m => m.Title);
             Map(m => m.Summary);
             Map(m => m.FullText);

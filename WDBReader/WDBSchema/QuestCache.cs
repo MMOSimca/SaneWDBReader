@@ -94,11 +94,11 @@ namespace WDBReader
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
         public int QuestSessionBonus { get; set; }
-        public int Int_44649 { get; set; } // Possibly NumConditionalSummarys?
+        public int QuestGiverCreatureID { get; set; }
         public int NumConditionalFullTexts { get; set; }
         public int NumConditionalCompletionBlurbs { get; set; }
 
-        public bool Bool_44649 { get; set; } // at the end of bitpacked text lengths
+        public bool ReadyForTranslation { get; set; } // at the end of bitpacked text lengths
 
         public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
 
@@ -125,7 +125,7 @@ namespace WDBReader
         public struct ConditionalText
         {
             public int PlayerConditionID { get; set; }
-            public int Int_44649 { get; set; }
+            public int QuestGiverCreatureID { get; set; }
             public string Text { get; set; }
         }
 
@@ -266,7 +266,7 @@ namespace WDBReader
             ManagedWorldStateID = ds.GetInt();
             QuestSessionBonus = ds.GetInt();
 
-            Int_44649 = ds.GetInt();
+            QuestGiverCreatureID = ds.GetInt();
             NumConditionalFullTexts = ds.GetInt();
             NumConditionalCompletionBlurbs = ds.GetInt();
 
@@ -289,7 +289,7 @@ namespace WDBReader
             var portraitTurnInTextLength = ds.GetIntByBits(10);
             var portraitTurnInNameLength = ds.GetIntByBits(8);
             var completionBlurbLength = ds.GetIntByBits(11);
-            Bool_44649 = ds.GetBool();
+            ReadyForTranslation = ds.GetBool();
             ds.Flush(); // Reset bit position and advance stream position to next byte
 
             // Populate quest objectives
@@ -336,7 +336,7 @@ namespace WDBReader
             {
                 ConditionalText condText = new ConditionalText();
                 condText.PlayerConditionID = ds.GetInt();
-                condText.Int_44649 = ds.GetInt();
+                condText.QuestGiverCreatureID = ds.GetInt();
                 var textLength = ds.GetIntByBits(12);
                 ds.Flush(); // Reset bit position and advance stream position to next byte
                 condText.Text = ds.GetString(textLength);
@@ -347,7 +347,7 @@ namespace WDBReader
             {
                 ConditionalText condText = new ConditionalText();
                 condText.PlayerConditionID = ds.GetInt();
-                condText.Int_44649 = ds.GetInt();
+                condText.QuestGiverCreatureID = ds.GetInt();
                 var textLength = ds.GetIntByBits(12);
                 ds.Flush(); // Reset bit position and advance stream position to next byte
                 condText.Text = ds.GetString(textLength);

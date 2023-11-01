@@ -70,7 +70,7 @@ namespace WDBReader
         public int AcceptedSoundKitID { get; set; }
         public int CompleteSoundKitID { get; set; }
         public int AreaGroupID { get; set; }
-        public int TimeAllowed { get; set; }
+        public ulong TimeAllowed { get; set; }
         public int NumObjectives { get; set; }
         public ulong RaceFlags { get; set; }
         /*
@@ -120,6 +120,7 @@ namespace WDBReader
         {
             public int RewardDisplaySpellID { get; set; }
             public int RewardDisplayPlayerConditionID { get; set; }
+            public int RewardDisplaySpellType { get; set; }
         }
 
         public struct ConditionalText
@@ -258,7 +259,7 @@ namespace WDBReader
             AcceptedSoundKitID = ds.GetInt();
             CompleteSoundKitID = ds.GetInt();
             AreaGroupID = ds.GetInt();
-            TimeAllowed = ds.GetInt();
+            TimeAllowed = ds.GetUInt64();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt64();
             QuestRewardID = ds.GetUInt();
@@ -276,6 +277,7 @@ namespace WDBReader
                 RewardDisplaySpell rds = new RewardDisplaySpell();
                 rds.RewardDisplaySpellID = ds.GetInt();
                 rds.RewardDisplayPlayerConditionID = ds.GetInt();
+                rds.RewardDisplaySpellType = ds.GetInt();
                 RewardDisplaySpells.Add(rds);
             }
 

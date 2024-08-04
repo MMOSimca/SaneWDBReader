@@ -61,7 +61,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.TimeAllowed);
             Map(m => m.NumObjectives);
             Map(m => m.RaceFlags);
-            Map(m => m.TreasurePickerID);
+            Map(m => m.NumTreasurePickerIDs);
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
             Map(m => m.QuestSessionBonus);
@@ -69,6 +69,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.NumConditionalFullTexts);
             Map(m => m.NumConditionalCompletionBlurbs);
             //List<RewardDisplaySpell>
+            Map(m => m.CombinedTreasurePickerIDs);
             //List<QuestObjective> - see QuestObjectiveMap for further info
             Map(m => m.ReadyForTranslation);
             Map(m => m.UNK_Bool_54295);

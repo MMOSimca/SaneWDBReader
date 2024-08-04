@@ -71,6 +71,7 @@ namespace WDBReader.WDBSchema
             //List<RewardDisplaySpell>
             //List<QuestObjective> - see QuestObjectiveMap for further info
             Map(m => m.ReadyForTranslation);
+            Map(m => m.UNK_Bool_54295);
             Map(m => m.Title);
             Map(m => m.Summary);
             Map(m => m.FullText);

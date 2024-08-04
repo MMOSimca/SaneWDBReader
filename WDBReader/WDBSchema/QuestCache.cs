@@ -100,6 +100,8 @@ namespace WDBReader
 
         public bool ReadyForTranslation { get; set; } // at the end of bitpacked text lengths
 
+        public bool UNK_Bool_54295 { get; set; } // at the end of bitpacked text lengths
+
         public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
@@ -292,6 +294,9 @@ namespace WDBReader
             var portraitTurnInNameLength = ds.GetIntByBits(8);
             var completionBlurbLength = ds.GetIntByBits(11);
             ReadyForTranslation = ds.GetBool();
+            UNK_Bool_54295 = ds.GetBool();
+            // There are 5 unused bits left here that could be used in the future without changing anything else.
+
             ds.Flush(); // Reset bit position and advance stream position to next byte
 
             // Populate quest objectives

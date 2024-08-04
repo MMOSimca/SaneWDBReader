@@ -90,7 +90,7 @@ namespace WDBReader
         0100 0000: Horde Pandaren
         0200 0000: Alliance Pandaren
         */
-        public uint QuestRewardID { get; set; }
+        public uint TreasurePickerID { get; set; }
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
         public int QuestSessionBonus { get; set; }
@@ -264,7 +264,7 @@ namespace WDBReader
             TimeAllowed = ds.GetUInt64();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt64();
-            QuestRewardID = ds.GetUInt();
+            TreasurePickerID = ds.GetUInt();
             ExpansionID = ds.GetInt();
             ManagedWorldStateID = ds.GetInt();
             QuestSessionBonus = ds.GetInt();

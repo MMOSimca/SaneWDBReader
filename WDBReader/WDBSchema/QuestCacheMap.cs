@@ -61,7 +61,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.TimeAllowed);
             Map(m => m.NumObjectives);
             Map(m => m.RaceFlags);
-            Map(m => m.QuestRewardID);
+            Map(m => m.TreasurePickerID);
             Map(m => m.ExpansionID);
             Map(m => m.ManagedWorldStateID);
             Map(m => m.QuestSessionBonus);

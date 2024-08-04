@@ -320,7 +320,7 @@ namespace WDBReader
                 QuestObjective obj = new QuestObjective();
                 obj.QuestID = QuestID; // Just for convenience
                 obj.ID = ds.GetInt();
-                obj.Type = ds.GetByte();
+                obj.Type = ds.GetInt();
                 obj.StorageIndex = (sbyte)ds.GetByte();
                 obj.AssetID = ds.GetInt();
                 obj.Amount = ds.GetInt();

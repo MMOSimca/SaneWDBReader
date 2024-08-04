@@ -6,7 +6,7 @@ public struct QuestObjective
 {
     public int QuestID { get; set; } // This doesn't exist in the original structure, we're just setting it for convenience
     public int ID { get; set; }
-    public byte Type { get; set; }
+    public int Type { get; set; }
     public sbyte StorageIndex { get; set; }
     public int AssetID { get; set; }
     public int Amount { get; set; }

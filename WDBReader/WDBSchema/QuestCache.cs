@@ -102,7 +102,7 @@ namespace WDBReader
 
         public bool ResetByScheduler { get; set; } // at the end of bitpacked text lengths
 
-        public List<RewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
+        public List<QuestRewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
 
         public List<int> TreasurePickerIDs { get; set; } // size NumTreasurePickerIDs
 
@@ -122,22 +122,8 @@ namespace WDBReader
         public string PortraitTurnInText { get; set; }
         public string PortraitTurnInName { get; set; }
         public string CompletionBlurb { get; set; }
-        public List<ConditionalText> ConditionalFullTexts { get; set; } // size NumConditionalFullTexts
-        public List<ConditionalText> ConditionalCompletionBlurbs { get; set; } // size NumConditionalCompletionBlurbs
-
-        public struct RewardDisplaySpell
-        {
-            public int RewardDisplaySpellID { get; set; }
-            public int RewardDisplayPlayerConditionID { get; set; }
-            public int RewardDisplaySpellType { get; set; }
-        }
-
-        public struct ConditionalText
-        {
-            public int PlayerConditionID { get; set; }
-            public int QuestGiverCreatureID { get; set; }
-            public string Text { get; set; }
-        }
+        public List<QuestConditionalFullText> ConditionalFullTexts { get; set; } // size NumConditionalFullTexts
+        public List<QuestConditionalCompletionBlurb> ConditionalCompletionBlurbs { get; set; } // size NumConditionalCompletionBlurbs
 
         public QuestCache(DataStore ds, int id)
         {
@@ -280,13 +266,15 @@ namespace WDBReader
             NumConditionalFullTexts = ds.GetInt();
             NumConditionalCompletionBlurbs = ds.GetInt();
 
-            RewardDisplaySpells = new List<RewardDisplaySpell>();
+            RewardDisplaySpells = new List<QuestRewardDisplaySpell>();
             for (var i = 0; i < NumRewardDisplaySpells; ++i)
             {
-                RewardDisplaySpell rds = new RewardDisplaySpell();
-                rds.RewardDisplaySpellID = ds.GetInt();
-                rds.RewardDisplayPlayerConditionID = ds.GetInt();
-                rds.RewardDisplaySpellType = ds.GetInt();
+                QuestRewardDisplaySpell rds = new QuestRewardDisplaySpell();
+                rds.QuestID = QuestID;
+                rds.Index = i + 1;
+                rds.SpellID = ds.GetInt();
+                rds.PlayerConditionID = ds.GetInt();
+                rds.SpellType = ds.GetInt();
                 RewardDisplaySpells.Add(rds);
             }
 
@@ -351,28 +339,34 @@ namespace WDBReader
             PortraitTurnInName = ds.GetString(portraitTurnInNameLength);
             CompletionBlurb = ds.GetString(completionBlurbLength);
 
-            // Conditional Text Blocks
-            ConditionalFullTexts = new List<ConditionalText>();
+            // Conditional text blocks
+            ConditionalFullTexts = new List<QuestConditionalFullText>();
             for (var i = 0; i < NumConditionalFullTexts; ++i)
             {
-                ConditionalText condText = new ConditionalText();
-                condText.PlayerConditionID = ds.GetInt();
-                condText.QuestGiverCreatureID = ds.GetInt();
+                QuestConditionalFullText condFullText = new QuestConditionalFullText();
+                condFullText.QuestID = QuestID;
+                condFullText.Index = i + 1;
+                condFullText.PlayerConditionID = ds.GetInt();
+                condFullText.QuestGiverCreatureID = ds.GetInt();
+
                 var textLength = ds.GetIntByBits(12);
                 ds.Flush(); // Reset bit position and advance stream position to next byte
-                condText.Text = ds.GetString(textLength);
-                ConditionalFullTexts.Add(condText);
+                condFullText.FullText = ds.GetString(textLength);
+
+                ConditionalFullTexts.Add(condFullText);
             }
-            ConditionalCompletionBlurbs = new List<ConditionalText>();
+            ConditionalCompletionBlurbs = new List<QuestConditionalCompletionBlurb>();
             for (var i = 0; i < NumConditionalCompletionBlurbs; ++i)
             {
-                ConditionalText condText = new ConditionalText();
-                condText.PlayerConditionID = ds.GetInt();
-                condText.QuestGiverCreatureID = ds.GetInt();
+                QuestConditionalCompletionBlurb condCompletionBlurb = new QuestConditionalCompletionBlurb();
+                condCompletionBlurb.QuestID = QuestID;
+                condCompletionBlurb.Index = i + 1;
+                condCompletionBlurb.PlayerConditionID = ds.GetInt();
+                condCompletionBlurb.QuestGiverCreatureID = ds.GetInt();
                 var textLength = ds.GetIntByBits(12);
                 ds.Flush(); // Reset bit position and advance stream position to next byte
-                condText.Text = ds.GetString(textLength);
-                ConditionalCompletionBlurbs.Add(condText);
+                condCompletionBlurb.CompletionBlurb = ds.GetString(textLength);
+                ConditionalCompletionBlurbs.Add(condCompletionBlurb);
             }
         }
     }

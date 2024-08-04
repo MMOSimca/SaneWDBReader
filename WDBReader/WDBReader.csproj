@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheReader.cs" />
-    <Compile Include="WDBSchema\QuestObjective.cs" />
+    <Compile Include="WDBSchema\QuestCacheSubstructures.cs" />
     <Compile Include="WDBSchema\CreatureCacheMap.cs" />
     <Compile Include="WDBSchema\GameObjectCacheMap.cs" />
     <Compile Include="WDBSchema\QuestCache.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="WDBSchema\GameObjectCache.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="WDBSchema\QuestCacheMap.cs" />
-    <Compile Include="WDBSchema\QuestObjectiveMap.cs" />
+    <Compile Include="WDBSchema\QuestCacheSubstructureMaps.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

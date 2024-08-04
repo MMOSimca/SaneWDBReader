@@ -68,7 +68,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.QuestGiverCreatureID);
             Map(m => m.NumConditionalFullTexts);
             Map(m => m.NumConditionalCompletionBlurbs);
-            //List<RewardDisplaySpell>
+            //List<RewardDisplaySpell> - see QuestRewardDisplaySpell for further info
             Map(m => m.CombinedTreasurePickerIDs);
             //List<QuestObjective> - see QuestObjectiveMap for further info
             Map(m => m.ReadyForTranslation);
@@ -82,8 +82,8 @@ namespace WDBReader.WDBSchema
             Map(m => m.PortraitTurnInText);
             Map(m => m.PortraitTurnInName);
             Map(m => m.CompletionBlurb);
-            //List<ConditionalText> ConditionalFullTexts
-            //List<ConditionalText> ConditionalCompletionBlurbs
+            //List<QuestConditionalFullText> - see QuestConditionalFullText for further info
+            //List<QuestConditionalCompletionBlurb> - see QuestConditionalCompletionBlurb for further info
         }
     }
 }

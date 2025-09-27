@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheReader.cs" />
+    <Compile Include="WDBSchema\CreatureCacheSubstructureMaps.cs" />
+    <Compile Include="WDBSchema\CreatureCacheSubstructures.cs" />
     <Compile Include="WDBSchema\QuestCacheSubstructures.cs" />
     <Compile Include="WDBSchema\CreatureCacheMap.cs" />
     <Compile Include="WDBSchema\GameObjectCacheMap.cs" />

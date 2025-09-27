@@ -180,6 +180,31 @@ namespace WDBReader
                     }
                 }
             }
+            else if (baseType == typeof(CreatureCache))
+            {
+                // Output CreatureDisplay structs to separate CSV when reading CreatureCache
+                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_CreatureDisplays_Build_{Build}.csv");
+                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+                using (TextWriter sw = new StreamWriter(fs))
+                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+                {
+                    csv.Configuration.RegisterClassMap<CreatureDisplayMap>();
+
+                    // Manually write out rows while iterating the structure
+                    csv.WriteHeader<CreatureDisplay>();
+                    csv.NextRecord();
+                    foreach (var row in Records.Values)
+                    {
+                        // In theory, NumCreatureDisplays and CreatureDisplays.Count are equal here
+                        var displays = (row as CreatureCache).CreatureDisplays;
+                        foreach (var display in displays)
+                        {
+                            csv.WriteRecord(display);
+                            csv.NextRecord();
+                        }
+                    }
+                }
+            }
         }
     }
 

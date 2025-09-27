@@ -41,11 +41,9 @@ namespace WDBReader
         public string TitleAlt { get; private set; }
         public string CursorName { get; private set; }
 
-        public struct CreatureDisplay
+        public string CombinedQuestItems
         {
-            public int CreatureDisplayInfoID { get; set; }
-            public float Scale { get; set; }
-            public float Probability { get; set; }
+            get { return string.Join(";", QuestItems); }
         }
 
         public CreatureCache(DataStore ds, int id)
@@ -96,6 +94,8 @@ namespace WDBReader
             for (var i = 0; i < NumCreatureDisplays; ++i)
             {
                 CreatureDisplay cd = new CreatureDisplay();
+                cd.CreatureID = id;
+                cd.Index = i + 1;
                 cd.CreatureDisplayInfoID = ds.GetInt();
                 cd.Scale = ds.GetFloat();
                 cd.Probability = ds.GetFloat();

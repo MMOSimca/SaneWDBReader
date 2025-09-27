@@ -5,16 +5,18 @@ namespace WDBReader
     class CreatureCache
     {
         public int ID { get; private set; }
+        public bool CLS_Bit1 { get; set; }
         public bool Leader { get; set; }
         public string[] Name { get; set; }
         public string[] NameAlt { get; set; }
         public uint[] Flags { get; set; }
-        public int CreatureType { get; private set; }
+        public byte CreatureType { get; private set; }
         public int CreatureFamily { get; private set; }
-        public int Classification { get; private set; }
+        public byte Classification { get; private set; }
         // Used mainly to tie many different mobs to a single CreatureID kill credit.
         // Often, the proxy's CreatureCache data won't even be sent by the server, meaning some CreatureIDs will only exist in this field.
         public int[] ProxyCreatureID { get; set; }
+        public int CLS_Int1 { get; set; }
         public int NumCreatureDisplays { get; set; }
         public float TotalProbability { get; set; }
         public List<CreatureDisplay> CreatureDisplays { get; set; }
@@ -22,6 +24,7 @@ namespace WDBReader
         public float EnergyMultiplier { get; private set; }
         public int NumQuestItems { get; set; }
         public List<int> QuestItems { get; set; }
+        public int CLS_Int2 { get; set; }
         public int CreatureMovementInfoID { get; set; }
         public int RequiredExpansion { get; set; }
         // Now only used if VignetteID is 0, since if VignetteID is present, they can just lookup Vignette::TrackingQuestID
@@ -55,6 +58,7 @@ namespace WDBReader
             var titleLength = ds.GetIntByBits(11);
             var titleAltLength = ds.GetIntByBits(11);
             var cursorNameLength = ds.GetIntByBits(6);
+            CLS_Bit1 = ds.GetBool();
             Leader = ds.GetBool();
             var name0Length = ds.GetIntByBits(11);
             var nameAlt0Length = ds.GetIntByBits(11);
@@ -81,15 +85,16 @@ namespace WDBReader
                 ds.GetUInt(),
                 ds.GetUInt(),
             };
-            CreatureType = ds.GetInt();
+            CreatureType = ds.GetByte();
             CreatureFamily = ds.GetInt();
-            Classification = ds.GetInt();
+            Classification = ds.GetByte();
             ProxyCreatureID = new int[2]
             {
                 ds.GetInt(),
                 ds.GetInt(),
             };
 
+            CLS_Int1 = ds.GetInt();
             NumCreatureDisplays = ds.GetInt();
             TotalProbability = ds.GetFloat();
             CreatureDisplays = new List<CreatureDisplay>();
@@ -105,6 +110,7 @@ namespace WDBReader
             HPMultiplier = ds.GetFloat();
             EnergyMultiplier = ds.GetFloat();
             NumQuestItems = ds.GetInt();
+            CLS_Int2 = ds.GetInt();
             CreatureMovementInfoID = ds.GetInt();
             RequiredExpansion = ds.GetInt();
             TrackingQuestID = ds.GetInt();

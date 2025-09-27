@@ -7,6 +7,7 @@ namespace WDBReader.WDBSchema
         public CreatureCacheMap()
         {
             Map(m => m.ID);
+            Map(m => m.CLS_Bit1);
             Map(m => m.Leader);
             Map(m => m.Name).Index(2, 5);
             Map(m => m.NameAlt).Index(6, 9);
@@ -15,11 +16,13 @@ namespace WDBReader.WDBSchema
             Map(m => m.CreatureFamily);
             Map(m => m.Classification);
             Map(m => m.ProxyCreatureID).Index(15, 16);
+            Map(m => m.CLS_Int1);
             Map(m => m.NumCreatureDisplays);
             Map(m => m.TotalProbability);
             Map(m => m.HPMultiplier);
             Map(m => m.EnergyMultiplier);
             Map(m => m.NumQuestItems);
+            Map(m => m.CLS_Int2);
             Map(m => m.CreatureMovementInfoID);
             Map(m => m.RequiredExpansion);
             Map(m => m.TrackingQuestID);

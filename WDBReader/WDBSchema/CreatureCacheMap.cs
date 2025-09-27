@@ -34,6 +34,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.Title);
             Map(m => m.TitleAlt);
             Map(m => m.CursorName);
+            Map(m => m.CombinedQuestItems);
         }
     }
 }

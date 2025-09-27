@@ -6,8 +6,11 @@ namespace WDBReader
     {
         public int QuestID { get; set; }
         public int QuestType { get; set; }
+        public int QuestLevel { get; set; }
+        public int QuestMinScalingLevel { get; set; } // Purpose only theorized; the field is never non-zero
+        public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
-        public int ContentTuningID { get; set; }
+        public int QuestMinLevel { get; set; }
         public int QuestSortID { get; set; }
         public int QuestInfoID { get; set; }
         public int SuggestedGroupNum { get; set; }
@@ -18,7 +21,7 @@ namespace WDBReader
         public int RewardMoneyDifficulty { get; set; }
         public float RewardMoneyMultiplier { get; set; }
         public int RewardBonusMoney { get; set; }
-        public int NumRewardDisplaySpells { get; set; }
+        public int[] RewardDisplaySpell { get; set; } // Size 3
         public int RewardSpell { get; set; }
         public int RewardHonorAddition { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
         public float RewardHonorMultiplier { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
@@ -102,15 +105,6 @@ namespace WDBReader
 
         public bool ResetByScheduler { get; set; } // at the end of bitpacked text lengths
 
-        public List<QuestRewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
-
-        public List<int> TreasurePickerIDs { get; set; } // size NumTreasurePickerIDs
-
-        public string CombinedTreasurePickerIDs
-        {
-            get { return string.Join(";", TreasurePickerIDs); }
-        }
-
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
         public string Title { get; set; }
@@ -129,8 +123,11 @@ namespace WDBReader
         {
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
+            QuestLevel = ds.GetInt();
+            QuestMinScalingLevel = ds.GetInt();
+            QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
-            ContentTuningID = ds.GetInt();
+            QuestMinLevel = ds.GetInt();
             QuestSortID = ds.GetInt();
             QuestInfoID = ds.GetInt();
             SuggestedGroupNum = ds.GetInt();
@@ -141,7 +138,10 @@ namespace WDBReader
             RewardMoneyDifficulty = ds.GetInt();
             RewardMoneyMultiplier = ds.GetFloat();
             RewardBonusMoney = ds.GetInt();
-            NumRewardDisplaySpells = ds.GetInt();
+            RewardDisplaySpell = new int[3];
+            RewardDisplaySpell[0] = ds.GetInt();
+            RewardDisplaySpell[1] = ds.GetInt();
+            RewardDisplaySpell[2] = ds.GetInt();
             RewardSpell = ds.GetInt();
             RewardHonorAddition = ds.GetInt();
             RewardHonorMultiplier = ds.GetFloat();
@@ -257,7 +257,6 @@ namespace WDBReader
             TimeAllowed = ds.GetUInt64();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt64();
-            NumTreasurePickerIDs = ds.GetUInt();
             ExpansionID = ds.GetInt();
             ManagedWorldStateID = ds.GetInt();
             QuestSessionBonus = ds.GetInt();
@@ -265,25 +264,6 @@ namespace WDBReader
             QuestGiverCreatureID = ds.GetInt();
             NumConditionalFullTexts = ds.GetInt();
             NumConditionalCompletionBlurbs = ds.GetInt();
-
-            RewardDisplaySpells = new List<QuestRewardDisplaySpell>();
-            for (var i = 0; i < NumRewardDisplaySpells; ++i)
-            {
-                QuestRewardDisplaySpell rds = new QuestRewardDisplaySpell();
-                rds.QuestID = QuestID;
-                rds.Index = i + 1;
-                rds.SpellID = ds.GetInt();
-                rds.PlayerConditionID = ds.GetInt();
-                rds.SpellType = ds.GetInt();
-                RewardDisplaySpells.Add(rds);
-            }
-
-            TreasurePickerIDs = new List<int>();
-            for (var i = 0; i < NumTreasurePickerIDs; ++i)
-            {
-                int treasurePickerID = ds.GetInt();
-                TreasurePickerIDs.Add(treasurePickerID);
-            }
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);

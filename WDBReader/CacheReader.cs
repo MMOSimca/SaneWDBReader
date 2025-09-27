@@ -114,28 +114,6 @@ namespace WDBReader
                     }
                 }
 
-                // Output QuestRewardDisplaySpell structs to separate CSV when reading QuestCache
-                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestRewardDisplaySpells_Build_{Build}.csv");
-                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
-                using (TextWriter sw = new StreamWriter(fs))
-                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
-                {
-                    csv.Configuration.RegisterClassMap<QuestRewardDisplaySpellMap>();
-
-                    // Manually write out rows while iterating the structure
-                    csv.WriteHeader<QuestRewardDisplaySpell>();
-                    csv.NextRecord();
-                    foreach (var row in Records.Values)
-                    {
-                        var rewardDisplaySpells = (row as QuestCache).RewardDisplaySpells;
-                        foreach (var rewardDisplaySpell in rewardDisplaySpells)
-                        {
-                            csv.WriteRecord(rewardDisplaySpell);
-                            csv.NextRecord();
-                        }
-                    }
-                }
-
                 // Output QuestConditionalFullText structs to separate CSV when reading QuestCache
                 outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestConditionalFullTexts_Build_{Build}.csv");
                 using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))

@@ -2,15 +2,6 @@
 
 namespace WDBReader
 {
-    public struct QuestRewardDisplaySpell
-    {
-        public int QuestID { get; set; } // This doesn't exist in the original structure, we're just setting it for convenience
-        public int Index { get; set; } // 1-based; this doesn't exist in the original structure, we're just setting it for convenience
-        public int SpellID { get; set; }
-        public int PlayerConditionID { get; set; }
-        public int SpellType { get; set; }
-    }
-
     // We store Quest Objective information in a custom structure due to the varying number of entries and large size
     // This is a structure only used inside QuestCache
     public struct QuestObjective

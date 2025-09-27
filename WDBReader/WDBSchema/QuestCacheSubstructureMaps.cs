@@ -2,18 +2,6 @@
 
 namespace WDBReader.WDBSchema
 {
-    sealed class QuestRewardDisplaySpellMap : ClassMap<QuestRewardDisplaySpell>
-    {
-        public QuestRewardDisplaySpellMap()
-        {
-            Map(m => m.QuestID);
-            Map(m => m.Index);
-            Map(m => m.SpellID);
-            Map(m => m.PlayerConditionID);
-            Map(m => m.SpellType);
-        }
-    }
-
     sealed class QuestObjectiveMap : ClassMap<QuestObjective>
     {
         public QuestObjectiveMap()

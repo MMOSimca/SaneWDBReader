@@ -6,11 +6,8 @@ namespace WDBReader
     {
         public int QuestID { get; set; }
         public int QuestType { get; set; }
-        public int QuestLevel { get; set; }
-        public int B27075_Int1 { get; set; } // Unknown, seems to frequently mirror SuggestedGroupNum (but is more expansive), possibly "maximum party size for LFG tool to delist"
-        public int QuestMaxScalingLevel { get; set; }
         public int QuestPackageID { get; set; }
-        public int QuestMinLevel { get; set; }
+        public int ContentTuningID { get; set; }
         public int QuestSortID { get; set; }
         public int QuestInfoID { get; set; }
         public int SuggestedGroupNum { get; set; }
@@ -21,7 +18,7 @@ namespace WDBReader
         public int RewardMoneyDifficulty { get; set; }
         public float RewardMoneyMultiplier { get; set; }
         public int RewardBonusMoney { get; set; }
-        public int[] RewardDisplaySpell { get; set; }
+        public int NumRewardDisplaySpells { get; set; }
         public int RewardSpell { get; set; }
         public int RewardHonorAddition { get; set; } // Gives X Honor - Unused for many years (do any still exist ingame?)
         public float RewardHonorMultiplier { get; set; } // Gives X amount of Honorable kills (Honor gain scales with level this way) - Unused for many years (do any still exist ingame?)
@@ -29,7 +26,7 @@ namespace WDBReader
         public float RewardArtifactXPMultiplier { get; set; }
         public int RewardArtifactCategoryID { get; set; }
         public int ProvidedItem { get; set; }
-        public uint[] Flags { get; set; }
+        public uint[] Flags { get; set; } // size 3
 
         // The player gets all of these rewards
         public int[] RewardFixedItemID { get; set; } // size 4
@@ -54,8 +51,9 @@ namespace WDBReader
         public int RewardSkillLineID { get; set; }
         public int RewardNumSkillUps { get; set; }
         public int PortraitGiverDisplayID { get; set; }
-        public int BFA_UnkDisplayID { get; set; }
+        public int PortraitGiverMountDisplayID { get; set; }
         public int PortraitTurnInDisplayID { get; set; }
+        public int PortraitModelSceneID { get; set; }
 
         // The specified FactionID gains X rep (where X is either the override amount or the 'value' multiplied by some unknown factor)
         public int[] RewardFactionID { get; set; } // size 5
@@ -72,7 +70,7 @@ namespace WDBReader
         public int AcceptedSoundKitID { get; set; }
         public int CompleteSoundKitID { get; set; }
         public int AreaGroupID { get; set; }
-        public int TimeAllowed { get; set; }
+        public ulong TimeAllowed { get; set; }
         public int NumObjectives { get; set; }
         public ulong RaceFlags { get; set; }
         /*
@@ -92,10 +90,26 @@ namespace WDBReader
         0100 0000: Horde Pandaren
         0200 0000: Alliance Pandaren
         */
-        public uint QuestRewardID { get; set; }
+        public uint NumTreasurePickerIDs { get; set; }
         public int ExpansionID { get; set; }
         public int ManagedWorldStateID { get; set; }
-        public int B31984_Int1 { get; set; }
+        public int QuestSessionBonus { get; set; }
+        public int QuestGiverCreatureID { get; set; }
+        public int NumConditionalFullTexts { get; set; }
+        public int NumConditionalCompletionBlurbs { get; set; }
+
+        public bool ReadyForTranslation { get; set; } // at the end of bitpacked text lengths
+
+        public bool ResetByScheduler { get; set; } // at the end of bitpacked text lengths
+
+        public List<QuestRewardDisplaySpell> RewardDisplaySpells { get; set; } // size NumRewardDisplaySpells
+
+        public List<int> TreasurePickerIDs { get; set; } // size NumTreasurePickerIDs
+
+        public string CombinedTreasurePickerIDs
+        {
+            get { return string.Join(";", TreasurePickerIDs); }
+        }
 
         public List<QuestObjective> Objectives { get; set; } // size NumObjectives
 
@@ -108,16 +122,15 @@ namespace WDBReader
         public string PortraitTurnInText { get; set; }
         public string PortraitTurnInName { get; set; }
         public string CompletionBlurb { get; set; }
+        public List<QuestConditionalFullText> ConditionalFullTexts { get; set; } // size NumConditionalFullTexts
+        public List<QuestConditionalCompletionBlurb> ConditionalCompletionBlurbs { get; set; } // size NumConditionalCompletionBlurbs
 
         public QuestCache(DataStore ds, int id)
         {
             QuestID = ds.GetInt();
             QuestType = ds.GetInt();
-            QuestLevel = ds.GetInt();
-            B27075_Int1 = ds.GetInt();
-            QuestMaxScalingLevel = ds.GetInt();
             QuestPackageID = ds.GetInt();
-            QuestMinLevel = ds.GetInt();
+            ContentTuningID = ds.GetInt();
             QuestSortID = ds.GetInt();
             QuestInfoID = ds.GetInt();
             SuggestedGroupNum = ds.GetInt();
@@ -128,10 +141,7 @@ namespace WDBReader
             RewardMoneyDifficulty = ds.GetInt();
             RewardMoneyMultiplier = ds.GetFloat();
             RewardBonusMoney = ds.GetInt();
-            RewardDisplaySpell = new int[3];
-            RewardDisplaySpell[0] = ds.GetInt();
-            RewardDisplaySpell[1] = ds.GetInt();
-            RewardDisplaySpell[2] = ds.GetInt();
+            NumRewardDisplaySpells = ds.GetInt();
             RewardSpell = ds.GetInt();
             RewardHonorAddition = ds.GetInt();
             RewardHonorMultiplier = ds.GetFloat();
@@ -199,8 +209,9 @@ namespace WDBReader
             RewardSkillLineID = ds.GetInt();
             RewardNumSkillUps = ds.GetInt();
             PortraitGiverDisplayID = ds.GetInt();
-            BFA_UnkDisplayID = ds.GetInt();
+            PortraitGiverMountDisplayID = ds.GetInt();
             PortraitTurnInDisplayID = ds.GetInt();
+            PortraitModelSceneID = ds.GetInt();
 
             RewardFactionID = new int[5];
             RewardFactionValue = new int[5];
@@ -243,11 +254,36 @@ namespace WDBReader
             AcceptedSoundKitID = ds.GetInt();
             CompleteSoundKitID = ds.GetInt();
             AreaGroupID = ds.GetInt();
-            TimeAllowed = ds.GetInt();
+            TimeAllowed = ds.GetUInt64();
             NumObjectives = ds.GetInt();
             RaceFlags = ds.GetUInt64();
-            QuestRewardID = ds.GetUInt();
+            NumTreasurePickerIDs = ds.GetUInt();
             ExpansionID = ds.GetInt();
+            ManagedWorldStateID = ds.GetInt();
+            QuestSessionBonus = ds.GetInt();
+
+            QuestGiverCreatureID = ds.GetInt();
+            NumConditionalFullTexts = ds.GetInt();
+            NumConditionalCompletionBlurbs = ds.GetInt();
+
+            RewardDisplaySpells = new List<QuestRewardDisplaySpell>();
+            for (var i = 0; i < NumRewardDisplaySpells; ++i)
+            {
+                QuestRewardDisplaySpell rds = new QuestRewardDisplaySpell();
+                rds.QuestID = QuestID;
+                rds.Index = i + 1;
+                rds.SpellID = ds.GetInt();
+                rds.PlayerConditionID = ds.GetInt();
+                rds.SpellType = ds.GetInt();
+                RewardDisplaySpells.Add(rds);
+            }
+
+            TreasurePickerIDs = new List<int>();
+            for (var i = 0; i < NumTreasurePickerIDs; ++i)
+            {
+                int treasurePickerID = ds.GetInt();
+                TreasurePickerIDs.Add(treasurePickerID);
+            }
 
             // String sizes
             var titleLength = ds.GetIntByBits(9);
@@ -259,6 +295,10 @@ namespace WDBReader
             var portraitTurnInTextLength = ds.GetIntByBits(10);
             var portraitTurnInNameLength = ds.GetIntByBits(8);
             var completionBlurbLength = ds.GetIntByBits(11);
+            ReadyForTranslation = ds.GetBool();
+            ResetByScheduler = ds.GetBool();
+            // There are 5 unused bits left here that could be used in the future without changing anything else.
+
             ds.Flush(); // Reset bit position and advance stream position to next byte
 
             // Populate quest objectives
@@ -268,7 +308,7 @@ namespace WDBReader
                 QuestObjective obj = new QuestObjective();
                 obj.QuestID = QuestID; // Just for convenience
                 obj.ID = ds.GetInt();
-                obj.Type = ds.GetByte();
+                obj.Type = ds.GetInt();
                 obj.StorageIndex = (sbyte)ds.GetByte();
                 obj.AssetID = ds.GetInt();
                 obj.Amount = ds.GetInt();
@@ -298,6 +338,36 @@ namespace WDBReader
             PortraitTurnInText = ds.GetString(portraitTurnInTextLength);
             PortraitTurnInName = ds.GetString(portraitTurnInNameLength);
             CompletionBlurb = ds.GetString(completionBlurbLength);
+
+            // Conditional text blocks
+            ConditionalFullTexts = new List<QuestConditionalFullText>();
+            for (var i = 0; i < NumConditionalFullTexts; ++i)
+            {
+                QuestConditionalFullText condFullText = new QuestConditionalFullText();
+                condFullText.QuestID = QuestID;
+                condFullText.Index = i + 1;
+                condFullText.PlayerConditionID = ds.GetInt();
+                condFullText.QuestGiverCreatureID = ds.GetInt();
+
+                var textLength = ds.GetIntByBits(12);
+                ds.Flush(); // Reset bit position and advance stream position to next byte
+                condFullText.FullText = ds.GetString(textLength);
+
+                ConditionalFullTexts.Add(condFullText);
+            }
+            ConditionalCompletionBlurbs = new List<QuestConditionalCompletionBlurb>();
+            for (var i = 0; i < NumConditionalCompletionBlurbs; ++i)
+            {
+                QuestConditionalCompletionBlurb condCompletionBlurb = new QuestConditionalCompletionBlurb();
+                condCompletionBlurb.QuestID = QuestID;
+                condCompletionBlurb.Index = i + 1;
+                condCompletionBlurb.PlayerConditionID = ds.GetInt();
+                condCompletionBlurb.QuestGiverCreatureID = ds.GetInt();
+                var textLength = ds.GetIntByBits(12);
+                ds.Flush(); // Reset bit position and advance stream position to next byte
+                condCompletionBlurb.CompletionBlurb = ds.GetString(textLength);
+                ConditionalCompletionBlurbs.Add(condCompletionBlurb);
+            }
         }
     }
 }

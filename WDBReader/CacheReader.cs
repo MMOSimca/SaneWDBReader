@@ -88,11 +88,11 @@ namespace WDBReader
                 csv.WriteRecords(Records.Values);
             }
 
-            // Output QuestObjectives structs to separate CSV when reading QuestCache
+            // TODO: Deduplicate code here using a generic writer for the substructure types
             if (baseType == typeof(QuestCache))
             {
+                // Output QuestObjective structs to separate CSV when reading QuestCache
                 outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestObjectives_Build_{Build}.csv");
-
                 using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
                 using (TextWriter sw = new StreamWriter(fs))
                 using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
@@ -106,13 +106,76 @@ namespace WDBReader
                     {
                         // In theory, NumObjectives and Objectives.Count are equal here
                         var objectives = (row as QuestCache).Objectives;
-                        if (objectives.Count > 0)
+                        foreach (var objective in objectives)
                         {
-                            foreach (var objective in objectives)
-                            {
-                                csv.WriteRecord(objective);
-                                csv.NextRecord();
-                            }
+                            csv.WriteRecord(objective);
+                            csv.NextRecord();
+                        }
+                    }
+                }
+
+                // Output QuestRewardDisplaySpell structs to separate CSV when reading QuestCache
+                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestRewardDisplaySpells_Build_{Build}.csv");
+                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+                using (TextWriter sw = new StreamWriter(fs))
+                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+                {
+                    csv.Configuration.RegisterClassMap<QuestRewardDisplaySpellMap>();
+
+                    // Manually write out rows while iterating the structure
+                    csv.WriteHeader<QuestRewardDisplaySpell>();
+                    csv.NextRecord();
+                    foreach (var row in Records.Values)
+                    {
+                        var rewardDisplaySpells = (row as QuestCache).RewardDisplaySpells;
+                        foreach (var rewardDisplaySpell in rewardDisplaySpells)
+                        {
+                            csv.WriteRecord(rewardDisplaySpell);
+                            csv.NextRecord();
+                        }
+                    }
+                }
+
+                // Output QuestConditionalFullText structs to separate CSV when reading QuestCache
+                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestConditionalFullTexts_Build_{Build}.csv");
+                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+                using (TextWriter sw = new StreamWriter(fs))
+                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+                {
+                    csv.Configuration.RegisterClassMap<QuestConditionalFullTextMap>();
+
+                    // Manually write out rows while iterating the structure
+                    csv.WriteHeader<QuestConditionalFullText>();
+                    csv.NextRecord();
+                    foreach (var row in Records.Values)
+                    {
+                        var conditionalFullTexts = (row as QuestCache).ConditionalFullTexts;
+                        foreach (var conditionalFullText in conditionalFullTexts)
+                        {
+                            csv.WriteRecord(conditionalFullText);
+                            csv.NextRecord();
+                        }
+                    }
+                }
+
+                // Output QuestConditionalCompletionBlurb structs to separate CSV when reading QuestCache
+                outputFilename = Path.Combine(directoryName, $"{baseType.Name}_QuestConditionalCompletionBlurbs_Build_{Build}.csv");
+                using (FileStream fs = File.Open(outputFilename, FileMode.Create, FileAccess.Write))
+                using (TextWriter sw = new StreamWriter(fs))
+                using (CsvWriter csv = new CsvWriter(sw, new CsvHelper.Configuration.CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture) { Delimiter = "," }))
+                {
+                    csv.Configuration.RegisterClassMap<QuestConditionalCompletionBlurbMap>();
+
+                    // Manually write out rows while iterating the structure
+                    csv.WriteHeader<QuestConditionalCompletionBlurb>();
+                    csv.NextRecord();
+                    foreach (var row in Records.Values)
+                    {
+                        var conditionalCompletionBlurbs = (row as QuestCache).ConditionalCompletionBlurbs;
+                        foreach (var conditionalCompletionBlurb in conditionalCompletionBlurbs)
+                        {
+                            csv.WriteRecord(conditionalCompletionBlurb);
+                            csv.NextRecord();
                         }
                     }
                 }

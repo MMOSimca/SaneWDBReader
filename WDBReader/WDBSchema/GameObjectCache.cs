@@ -33,7 +33,7 @@ namespace WDBReader
             Action = ds.GetCString();
             Condition = ds.GetCString();
 
-            GameData = new int[34];
+            GameData = new int[35];
             for (int i = 0; i < GameData.Length; ++i)
             {
                 GameData[i] = ds.GetInt();

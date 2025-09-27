@@ -8,11 +8,8 @@ namespace WDBReader.WDBSchema
         {
             Map(m => m.QuestID);
             Map(m => m.QuestType);
-            Map(m => m.QuestLevel);
-            Map(m => m.B27075_Int1);
-            Map(m => m.QuestMaxScalingLevel);
             Map(m => m.QuestPackageID);
-            Map(m => m.QuestMinLevel);
+            Map(m => m.ContentTuningID);
             Map(m => m.QuestSortID);
             Map(m => m.QuestInfoID);
             Map(m => m.SuggestedGroupNum);
@@ -23,7 +20,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardMoneyDifficulty);
             Map(m => m.RewardMoneyMultiplier);
             Map(m => m.RewardBonusMoney);
-            Map(m => m.RewardDisplaySpell).Index(17, 19);
+            Map(m => m.NumRewardDisplaySpells);
             Map(m => m.RewardSpell);
             Map(m => m.RewardHonorAddition);
             Map(m => m.RewardHonorMultiplier);
@@ -31,14 +28,14 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardArtifactXPMultiplier);
             Map(m => m.RewardArtifactCategoryID);
             Map(m => m.ProvidedItem);
-            Map(m => m.Flags).Index(27, 29);
-            Map(m => m.RewardFixedItemID).Index(30, 33);
-            Map(m => m.RewardFixedItemQuantity).Index(34, 37);
-            Map(m => m.ItemDropID).Index(38, 41);
-            Map(m => m.ItemDropQuantity).Index(42, 45);
-            Map(m => m.RewardChoiceItemID).Index(46, 51);
-            Map(m => m.RewardChoiceItemQuantity).Index(52, 57);
-            Map(m => m.RewardChoiceItemDisplayID).Index(58, 63);
+            Map(m => m.Flags).Index(22, 24);
+            Map(m => m.RewardFixedItemID).Index(25, 28);
+            Map(m => m.RewardFixedItemQuantity).Index(29, 32);
+            Map(m => m.ItemDropID).Index(33, 36);
+            Map(m => m.ItemDropQuantity).Index(37, 40);
+            Map(m => m.RewardChoiceItemID).Index(41, 46);
+            Map(m => m.RewardChoiceItemQuantity).Index(47, 52);
+            Map(m => m.RewardChoiceItemDisplayID).Index(53, 58);
             Map(m => m.POIContinent);
             Map(m => m.POIx);
             Map(m => m.POIy);
@@ -48,24 +45,34 @@ namespace WDBReader.WDBSchema
             Map(m => m.RewardSkillLineID);
             Map(m => m.RewardNumSkillUps);
             Map(m => m.PortraitGiverDisplayID);
-            Map(m => m.BFA_UnkDisplayID);
+            Map(m => m.PortraitGiverMountDisplayID);
             Map(m => m.PortraitTurnInDisplayID);
-            Map(m => m.RewardFactionID).Index(75, 79);
-            Map(m => m.RewardFactionValue).Index(80, 84);
-            Map(m => m.RewardFactionOverride).Index(85, 89);
-            Map(m => m.RewardFactionGainMaxRank).Index(90, 94);
+            Map(m => m.PortraitModelSceneID);
+            Map(m => m.RewardFactionID).Index(70, 74);
+            Map(m => m.RewardFactionValue).Index(75, 79);
+            Map(m => m.RewardFactionOverride).Index(80, 84);
+            Map(m => m.RewardFactionGainMaxRank).Index(85, 89);
             Map(m => m.RewardFactionFlags);
-            Map(m => m.RewardCurrencyID).Index(96, 99);
-            Map(m => m.RewardCurrencyQuantity).Index(100, 103);
+            Map(m => m.RewardCurrencyID).Index(91, 94);
+            Map(m => m.RewardCurrencyQuantity).Index(95, 98);
             Map(m => m.AcceptedSoundKitID);
             Map(m => m.CompleteSoundKitID);
             Map(m => m.AreaGroupID);
             Map(m => m.TimeAllowed);
             Map(m => m.NumObjectives);
             Map(m => m.RaceFlags);
-            Map(m => m.QuestRewardID);
+            Map(m => m.NumTreasurePickerIDs);
             Map(m => m.ExpansionID);
+            Map(m => m.ManagedWorldStateID);
+            Map(m => m.QuestSessionBonus);
+            Map(m => m.QuestGiverCreatureID);
+            Map(m => m.NumConditionalFullTexts);
+            Map(m => m.NumConditionalCompletionBlurbs);
+            //List<RewardDisplaySpell> - see QuestRewardDisplaySpell for further info
+            Map(m => m.CombinedTreasurePickerIDs);
             //List<QuestObjective> - see QuestObjectiveMap for further info
+            Map(m => m.ReadyForTranslation);
+            Map(m => m.ResetByScheduler);
             Map(m => m.Title);
             Map(m => m.Summary);
             Map(m => m.FullText);
@@ -75,6 +82,8 @@ namespace WDBReader.WDBSchema
             Map(m => m.PortraitTurnInText);
             Map(m => m.PortraitTurnInName);
             Map(m => m.CompletionBlurb);
+            //List<QuestConditionalFullText> - see QuestConditionalFullText for further info
+            //List<QuestConditionalCompletionBlurb> - see QuestConditionalCompletionBlurb for further info
         }
     }
 }

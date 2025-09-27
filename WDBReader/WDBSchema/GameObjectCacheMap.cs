@@ -13,7 +13,7 @@ namespace WDBReader.WDBSchema
             Map(m => m.Icon);
             Map(m => m.Action);
             Map(m => m.Condition);
-            Map(m => m.GameData).Index(10, 43);
+            Map(m => m.GameData).Index(10, 44);
             Map(m => m.Scale);
             Map(m => m.NumQuestItems);
             //List<int> QuestItems
